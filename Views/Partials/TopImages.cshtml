@@ -1,0 +1,47 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+	
+	@if (Model.Content.HasValue("images"))
+	{
+		
+		var imagesList = Model.Content.GetPropertyValue<string>("images").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+		var imagesCollection = Umbraco.TypedMedia(imagesList).Where(x => x != null);
+		var imgWidth = @Functions.ImgWidth();
+		
+		
+		<div id="topimagewrapper" count="x">
+	    
+    	<div id="topimages" class="cycle-slideshow" 
+		    data-cycle-fx=fade
+		    data-cycle-timeout=7000
+		    data-cycle-speed=2000
+			data-cycle-swipe=true
+		    data-cycle-manual-speed=300
+		    data-cycle-slides="> div"
+		    data-cycle-pager=".cycle-pager"
+	        data-cycle-pager-template="<span></span>"
+
+		    >
+		 @{   
+	   
+	
+	    foreach (var image in imagesCollection)
+	        {      
+	           <div class="slide"><img src="/imagegen.ashx?image=@image.Url&width=@imgWidth"  />
+				   
+				</div>    
+	        }
+	        
+	    }    
+	        </div>
+    	
+    	
+    	@if(imagesList.Count() > 1){
+	    	<div id="pagerwrapper"><div class="cycle-pager"></div></div>
+    	}
+	    	
+    </div><!-- end #topimagewrapper -->
+	                                                                       
+	} else {
+	
+		<div class="clearfix top-padding"></div>
+	}

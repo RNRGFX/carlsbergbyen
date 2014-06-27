@@ -1,0 +1,36 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+		
+}
+
+@section head{
+	<link rel="stylesheet" href="/css/gallery.css">
+}
+
+<div id="container" class="normal gallery">
+	
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+    
+    <article>
+		<div id="content" class="main">
+		     <div class="clearfix spacing45"></div>
+		      <div class="main gu6">
+						
+				<div class="row gu6" id="galleries">	
+						
+						
+				@Umbraco.RenderMacro("GalleryOverview")
+						
+				</div>
+			</div>
+		</div>						
+		
+    </article>
+</div><!-- end #container -->

@@ -1,0 +1,72 @@
+﻿@using System
+@using System.Text.RegularExpressions
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+
+@{
+    var startNodeID = Parameter.nodeId;
+}
+
+@if (startNodeID != null)
+{
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+    
+    if (startNode.Children.Where("Visible").Any())
+    {
+            foreach (var page in startNode.Children.Where("Visible"))
+            {
+				
+				var venueName = "";
+				var thumbUrl = "";
+				
+				if (page.HasValue("images"))
+				{
+					
+					var imagesList = page.GetPropertyValue<string>("images");
+					List<string> imagesArray = new List<string>(imagesList.Split(','));
+					thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+					
+				}
+				
+				string openHours = page.openhours.Replace("\"", "");
+				List<string> openHoursList = openHours.Split(new char[]{'[',']',','},StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+
+				
+				@*
+				for matching string "null"
+				Regex rgx = new Regex(@"^(?!null$).*");
+				
+				if ( rgx.IsMatch(openHours) )		{
+					
+				}*@
+				
+				int iStart = 0;
+				foreach(var day in openHoursList){
+					bool start = iStart % 2 == 0 ? true : false;
+					if (!String.IsNullOrEmpty(day)){
+						
+						iStart ++;	
+					}
+					
+				}
+				
+				if (@page.venue != ""){
+					var venue = Library.NodeById(@page.venue);
+					venueName = venue.Name;
+				}
+    
+				
+				
+
+                <div class="gu2">
+					<a href="@page.Url" class="reallink ">
+						<div class="meta"><span class="date1">@page.dateField1</span><span class="date2">@page.dateField2</span><span class="venue">@venueName</span></div>
+						<img src="/imagegen.ashx?image=@thumbUrl&height=184">	
+						<h4>@page.Name</h4>
+					</a>
+				</div>
+            }
+        
+    }    
+}

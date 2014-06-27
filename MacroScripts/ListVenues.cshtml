@@ -1,0 +1,36 @@
+﻿@using System
+@using System.Text.RegularExpressions
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+	
+
+@{
+    var startNodeID = Parameter.nodeId;
+
+}
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	link = Regex.Replace(link, @"[é]+", "e");	
+	@link;	
+}
+
+
+@{
+	
+	var startNode = Library.NodeById(startNodeID);
+		
+	if (startNode.Children.Where("Visible").Any())
+	{
+		foreach (var page in startNode.Children.Where("Visible && eventOverviewVisible"))
+		{	
+			<li><a href="#"	class="venue" id="@urlify(page.Name)">@page.Name</a></li>	
+		}
+	}
+}

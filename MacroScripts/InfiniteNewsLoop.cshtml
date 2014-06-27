@@ -1,0 +1,147 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@using System.Text.RegularExpressions
+@using System.Globalization
+@using HtmlAgilityPack
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	@link;	
+}	
+
+@{
+    var startNodeID = Parameter.nodeId;
+	int startIndex = (Parameter.startIndex != "") ? Convert.ToInt32(Parameter.startIndex) : Convert.ToInt32(HttpContext.Current.Request.QueryString["page"]);
+	string reqCategory = HttpContext.Current.Request.QueryString["category"];
+	string classes = (Parameter.classes != "") ? Parameter.classes : "";
+
+	int limit = (Parameter.limit != "") ? Convert.ToInt32(Parameter.limit) : 10;
+	int page = (startIndex-1) * 10;
+}
+
+
+
+@if (startNodeID != null)
+{
+	
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+	
+	
+    
+    if (startNode.Children.Where("Visible").Any())
+    {
+        
+		foreach (var newspage in startNode.Children.Where("Visible").OrderBy("OrgCreateDate desc").Skip(startIndex).Take(limit))
+		{
+			
+			var category = newspage.HasValue("category") ? newspage.GetPropertyValue("category") : "<a href=\"/nyheder?category=GenerelleNyheder\">Generelle Nyheder</a>";
+			var catUrls = "GenerelleNyheder";
+	
+			if (newspage.HasValue("category")){
+					
+				List<string> catArray = new List<string>(category.Split(','));
+				var categoryString = new List<dynamic>();
+				var urlString = new List<dynamic>();
+				
+				foreach (var cat in	catArray){
+					var aString = "<a href=\"/nyheder?category="+@urlify(cat)+"\">"+@cat+"</a>";
+					var uString = urlify(cat);
+					
+					categoryString.Add(aString);
+					urlString.Add(uString);
+					
+				}
+				
+				category = string.Join(", ", categoryString);
+				catUrls = string.Join(", ", urlString);
+			}
+			
+			
+			if((reqCategory != null && catUrls.Contains(reqCategory)) || reqCategory == null){
+				
+				
+				var thumbUrl = "";
+				var thumbWidth = "";	
+			
+				var url = newspage.bodyText.ToString();
+				var document = new HtmlDocument();
+				document.LoadHtml(url);
+				
+				var imgElement = document.DocumentNode.Descendants("img").Take(1);
+				var imgSrc = imgElement.Select(e => e.GetAttributeValue("src", null)).Where(s => !String.IsNullOrEmpty(s)).ToList();
+				var imgWidth = imgElement.Select(e => e.GetAttributeValue("width", null)).Where(s => !String.IsNullOrEmpty(s)).ToList();
+				if(imgSrc.Any()){
+					thumbUrl = imgSrc.First();
+				}
+			
+				if(imgWidth.Any()){
+					thumbWidth = imgWidth.First();
+					@thumbWidth
+				}
+					
+			
+				
+				if (newspage.HasValue("images") && thumbUrl == "")
+				{
+					
+					var imagesList = newspage.GetPropertyValue<string>("images");
+					List<string> imagesArray = new List<string>(imagesList.Split(','));
+					thumbUrl = newspage.MediaById(imagesArray[0]).umbracoFile;
+					@newspage.MediaById(imagesArray[0]).UmbracoWidth
+				} else if (thumbUrl == ""){
+					thumbUrl = newspage.GetPropertyValue("thumbnail");
+					@newspage.GetPropertyValue("thumbnail").UmbracoWidth
+				}
+				
+				var importDate = newspage.GetPropertyValue("OrgCreateDate");
+				
+				var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+					
+				if(importDate.ToString().IndexOf("Z") != -1)
+				{
+					dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+				}
+				
+				var convertDate = DateTime.ParseExact(importDate, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+				var date = (newspage.GetPropertyValue("OrgCreateDate") != "") ? convertDate.ToString("dd. MMMM yyyy") : newspage.CreateDate.ToString("dd. MMMM yyyy");	
+	
+				
+				<div class="item @classes">
+					
+					<div class="meta">
+						<span class="category">Nyhedskategori: @Html.Raw(category)</span>
+						<span class="date">@date</span>
+					</div>
+					<a href="@newspage.Url" class="newslink">
+						<div class="imgwrapper">
+							<span class="arrow"></span>
+							<img src="/imagegen.ashx?image=@thumbUrl&amp;width=750" alt="@newspage.Name">
+						</div>
+						<div class="right">
+						<h4>@newspage.Name</h4>
+						<p>@newspage.GetPropertyValue("description")</p>
+						</div>
+						<div class="clearfix"></div>
+					</a>
+				</div>
+
+		
+			}
+						
+		}
+			
+    }	
+	
+	
+	
+
+	
+	
+}

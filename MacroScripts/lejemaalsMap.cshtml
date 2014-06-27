@@ -1,0 +1,27 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{
+	
+	var building = Model.Parent;
+	
+	
+	if (building.HasValue("gps")){
+		var gps = building.GetPropertyValue("gps");
+		List<string> latLng = new List<string>(gps.Split(','));
+		
+		<script>
+		var lat = @latLng[0];
+		var lng = @latLng[1];
+		var title = '@building.Name';
+		</script>
+		
+		<div id="map-canvas"></div>
+
+	}
+	<div class="datawrapper">
+		<a class="yellowbutton location" href="http://maps.google.dk/maps?q=@building.GetPropertyValue("address"),+@building.GetPropertyValue("zip") " target="_blank"></a>
+		<h6 class="adresse">Adresse:</h6>
+		@building.GetPropertyValue("address") <br/>
+		@building.GetPropertyValue("zip")<span>&nbsp;</span>@building.GetPropertyValue("city") 
+	</div>
+}

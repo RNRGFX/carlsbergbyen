@@ -1,0 +1,46 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{
+	var rootNode = Model.AncestorOrself(1);
+
+}
+
+
+@*Render the sitemap by passing the root node to the traverse helper*@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    @traverse(@Model.AncestorOrSelf())
+</urlset>
+
+
+
+@*Helper method to travers through all descendants*@
+@helper traverse(dynamic node){
+
+@*If a MaxLevelForSitemap parameter is passed to the macro, otherwise default to 4 levels*@
+
+@*Select visible children *@
+var items = node.Children.Where("Visible");
+
+
+@*If any items are returned, render a list *@
+if (items.Any()) { 
+	foreach (var item in items) {
+
+			
+				
+				decimal prio = (decimal)item.Level;
+				decimal priority = (decimal)1.40 - prio/(decimal)5.00;	
+				
+			   <url>
+				   <loc>http://@HttpContext.Current.Request.Url.Host@item.Url</loc>
+				   <lastmod>@item.CreateDate.ToString("yyyy-MM-dd")</lastmod>
+				   <changefreq>weekly</changefreq>
+				   <priority>@priority</priority>
+				</url> 
+	 
+	  @traverse(item) 
+	}
+	   
+    }
+}

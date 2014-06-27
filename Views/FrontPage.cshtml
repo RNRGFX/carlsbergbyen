@@ -1,0 +1,195 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+	var imgWidth = @Functions.ImgWidth();
+}
+
+@*this content will be rendered in the named section head*@
+@section head{
+ <script>
+	 
+	 $(document).ready(function(){
+	 
+	 	var pops = $('#pops').children().length;
+	 	var clearPops;
+			
+		$('.sitplan.bottom').waypoint(function() {
+			showPops(0)
+		}, {offset: $.waypoints('viewportHeight')-400});
+		
+		
+		function showPops(index){
+		
+			for (var i = index; i < index+3; i++){
+				var dl = Math.floor(Math.random(1)*600)+400;
+				var popnum = i%pops+1;
+				$('.pop:nth-child('+popnum+')').delay(dl).animate({'margin-top':0,'opacity':1}, 0)
+				
+			}
+			
+			clearPops = setTimeout(function(){hidePops(index)}, 5000)		
+		}
+		
+		function hidePops(index){
+			
+			clearTimeout(clearPops);
+		
+			for (var i = index; i < index+3; i++){
+				
+				var popnum = i%pops+1;
+				$('.pop:nth-child('+popnum+')').animate({'margin-top':20,'opacity':0}, 0)
+				
+			}
+			
+			showPops(index+3)	
+		}
+		
+	 })
+ </script>
+}
+ 
+@*The following content will be caught by the RenderBody() tag in the parent template*@
+<div id="container" class="frontpage">
+
+<div id="topimagewrapper">
+    
+    	<div id="topimages" class="cycle-slideshow" 
+		    data-cycle-fx=fade
+		    data-cycle-timeout=7000
+		    data-cycle-speed=500
+			data-cycle-swipe=true
+		    data-cycle-slides="> div"
+		    data-cycle-pager=".cycle-pager"
+	        data-cycle-pager-template="<span></span>"
+
+		    >
+			@Umbraco.RenderMacro("FrontPageSliders")
+			
+    		
+    		
+    	</div>
+    	
+    	<div id="pagerwrapper"><div class="cycle-pager"></div></div>
+    	
+    </div>
+    
+	<div style="display:none;">
+			@Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news1")})		
+	</div>
+			
+			
+	<article>
+	<div id="content" class="main">
+	
+         <div class="clearfix spacing45"></div>
+
+        <div class="main home gu6">
+
+        <div class="row">
+		  	
+			@Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news1")})
+			@Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news2")})
+			@Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news3")})
+		</div>
+		
+         <div class="clearfix spacing21"></div>
+         
+         <div class="row">
+
+		@Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu4", nodeId=Umbraco.Field("news4")})
+
+		  
+		  <div class="col gu2 event-cal">
+		  
+		    <a href="events"><h4>Eventkalender</h4></a>
+		    @Umbraco.RenderMacro("ListLatestEvents", new {nodeId="2277", limit=5, startIndex=0})
+		    
+		    <a class="events-link" href="/events">Se hvad der sker i carlsberg byen</a>
+		    
+		    
+		  </div><!-- end events -->
+		  
+		 </div><!-- end row -->
+          <div class="clearfix spacing"></div>
+
+		  <div class="row">
+
+		  @Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu3", nodeId=Umbraco.Field("news5")})
+		  @Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu3", nodeId=Umbraco.Field("news6")})
+		</div><!-- end row -->
+		
+        <div class="clearfix spacing21"></div>
+			
+		<div class="row">
+		  @Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news7")})
+		  @Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news8")})
+		  @Umbraco.RenderMacro("SingleNewsitem", new {classes="col gu2", nodeId=Umbraco.Field("news9")})	  
+		</div><!-- end row -->	
+			
+        <div class="clearfix spacing"></div>
+
+		
+				
+		
+        </div><!-- end .main.home -->
+        
+			
+			@{
+				
+				@*
+        <div class="sitplan top">
+			<div class="gu6 main ">
+				<div class="row">			
+						
+					<div class="col gu3 header"><h1>@CurrentPage.title</h1></div>
+					<div class="col gu3">&nbsp;</div>
+				</div>	
+			</div>
+		</div><!-- end .sitplan -->
+		
+		<div class="sitplan bottom">
+			<div class="read-more-wrapper">
+				<div class="gu6 main ">
+					<div class="row">
+				
+					<div class="col gu2">
+						<div class="whiteback">
+							@CurrentPage.columntext
+						</div>
+					</div>	
+					<a class="col gu4" href="/om-carlsberg-byen/byudvikling/oplev-det-kommende-carlsberg-byen/">
+					<div id="pops">
+						<div class="pop" id="europaskolen"><div class="table"><div class="cell">Europaskolen<br/> i København</div></div></div>
+						<div class="pop rtut" id="blandet"><div class="table"><div class="cell">Blandet bolig/erhverv</div></div></div>
+						<div class="pop grey" id="tap-e"><div class="table"><div class="cell">Tap E</div></div></div>
+						
+						<div class="pop" id="warehouse"><div class="table"><div class="cell">Warehouse</div></div></div>
+						<div class="pop grey rtut" id="kedelhus"><div class="table"><div class="cell">Kedelhus</div></div></div>
+						<div class="pop rtut" id="journalist"><div class="table"><div class="cell">Journalisthøjskolen</div></div></div>
+					</div>
+					</a>
+				</div>
+					
+				</div>
+				<div class="read-more"></div>
+			</div>					
+		</div><!-- end .sitplan -->
+		
+		<div class="main gu6 after-sitplan">
+		<div class="row">
+		  <div class="col gu2 mhidden">&nbsp;</div>	  
+		  <div class="col gu3"><p>@CurrentPage.subText</p></div>
+  		  <div class="col gu1 mhidden">&nbsp;</div>
+		</div><!-- end row -->
+		</div>
+
+	
+		<div class="clearfix spacing"></div>*@
+			}
+	
+	
+	
+	</div><!-- end #content -->
+	</article>
+</div><!-- end container -->
+	

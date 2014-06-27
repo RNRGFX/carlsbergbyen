@@ -1,0 +1,45 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+	
+@{
+
+	<ul class="navigation">
+	@foreach (var page in Model.AncestorOrSelf(1).Children.Where("Visible"))
+	{
+	   var reallink = page.isRealLink ? "" : "nolink";
+		var href = page.isRealLink ? page.Url : "#";	
+
+	   <li class="@page.IsAncestorOrSelf(Model, "current", "") @reallink"><a href="@href">@page.Name</a>
+	   @if (page.Children.Where("Visible && (NodeTypeAlias.Contains(\"Normalside\") || NodeTypeAlias.Contains(\"Oversigtsside\") || NodeTypeAlias.Contains(\"Oversigtsside6Felter\"))").Count() > 0)
+	   {
+		  <ul class="submenu gu6">
+			 @foreach (var subpage in page.Children.Where("Visible"))
+			 {
+				 
+				 
+				 var realSubLink = "";
+				 var realSubUrl = subpage.Url;
+				 if(subpage.HasProperty("isRealLink")){
+					realSubLink = (subpage.isRealLink == true) ? "" : "nolink";
+					 realSubUrl = (subpage.isRealLink == true) ? subpage.Url : "#";
+				 }
+				 
+				<li class="@subpage.IsAncestorOrSelf(Model, "current", "") @realSubLink"><a href="@realSubUrl">@subpage.Name</a>
+					@if (subpage.Children.Where("Visible && (NodeTypeAlias.Contains(\"Normalside\") || NodeTypeAlias.Contains(\"Oversigtsside\") || NodeTypeAlias.Contains(\"Oversigtsside6Felter\"))").Count() > 0)
+					   {
+						  <ul class="subsubmenu gu6">
+							 @foreach (var subsubpage in subpage.Children.Where("Visible"))
+							 {
+								<li class="@subsubpage.IsAncestorOrSelf(Model, "current", "")"><a href="@subsubpage.Url">@subsubpage.Name</a></li>
+							 }
+						  </ul>
+					   }
+						
+				</li>
+			 }
+		  </ul>
+	   }
+	   </li>
+	}
+	</ul>
+
+}

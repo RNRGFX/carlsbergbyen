@@ -1,0 +1,70 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+}
+	
+	
+
+@*this content will be rendered in the named section head*@
+@section head{
+
+	<script type="text/javascript" src="/scripts/jquery.debouncedresize.js"></script>
+	
+	<script type="text/javascript" src="/scripts/jquery.isotope.min.js"></script>
+	<script type="text/javascript" src="/scripts/masonry.mod.js"></script>
+	<script type="text/javascript" src="/scripts/newsOverview.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.infinitescroll.js"></script>
+	
+	<script>
+		var category = "@HttpContext.Current.Request.QueryString["category"]";
+	</script>
+  
+}
+ 
+@*The following content will be caught by the RenderBody() tag in the parent template*@
+
+
+
+<div id="container" class="news-overview">
+	
+	<div class="clearfix top-padding"></div>
+		<article>
+			<div id="content" class="main news-overview">
+				<div class="main gu6">
+					<h1>@Model.Content.Name</h1>
+					<div id="newsViewState">
+					
+						<div id="newsViewimg"></div>
+						<div id="newsViews">
+							<ul>
+								<li><a href="#" onClick="switchView('view1')" class="view1">Normal</a></li>
+								<!--li><a href="#" onClick="switchView('view2')" class="view2">Pinterest</a></li-->
+								<li><a href="#" onClick="switchView('view3')" class="view3">Rækker</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div id="newswrapper">
+							<div class="row infinite-container">
+								
+								@Umbraco.RenderMacro("NewsLoop", new {nodeId="1052"})
+							</div>
+						</div>
+						
+						<div class="nextnav"><a class="infinite-more-link" href="/nyheder?page=2">Hent flere...</a></div>	
+
+	
+							
+							
+						<div class="col gu2 news-list">
+							<h4>Nyhedsoversigt</h4>
+							@Umbraco.RenderMacro("ListLatestNews", new {nodeId="1052", limit=10, startIndex=0})
+						</div>	
+				
+					</div>
+				</div>
+			</div>
+		
+	</article>
+</div>
+	

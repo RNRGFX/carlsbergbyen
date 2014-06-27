@@ -1,0 +1,60 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+}
+{
+  "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+  "base_url": "http:\/\/www.carlsbergbyen.dk",
+  "languages": [
+    {
+      "language": "da",
+      "feeds": [
+        {
+          "id": "didyouknow",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/didyouknow?lan=da"
+        },
+        {
+          "id": "locations",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/locations?lan=da"
+        },
+        {
+          "id": "management",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/management?lan=da"
+        },
+        {
+          "id": "calendar",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/calendar?lan=da"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "feeds": [
+        {
+          "id": "didyouknow",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/didyouknow?lan=en"
+        },
+        {
+          "id": "locations",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/locations?lan=en"
+        },
+        {
+          "id": "management",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/management?lan=en"
+        },
+        {
+          "id": "calendar",
+          "updated": @DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+          "url": "http:\/\/www.carlsbergbyen.dk\/app\/calendar?lan=en"
+        }
+      ]
+    }
+  ]
+}

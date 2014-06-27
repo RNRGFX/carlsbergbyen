@@ -1,0 +1,12 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@{
+	
+	var vNode = Library.NodeById(3243).Children.Where("Visible").Random();
+	
+	<div class="vidstedu">
+		<a href="/om-carlsberg-byen/kvarterets-historie/vidste-du/"><h2>Vidste du</h2></a>
+		<span><em>- @vNode.GetPropertyValue("vidsteDu")</em></span>
+	</div>
+	
+			
+}

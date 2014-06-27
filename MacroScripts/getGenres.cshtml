@@ -1,0 +1,36 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@using System.Text.RegularExpressions
+@using System.Globalization
+
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	@link;	
+}	
+	
+@{
+	if (Model.HasValue("genrer2")){
+		var genrer =  Model.GetPropertyValue("genrer2");
+		
+	
+		List<string> genreArray = new List<string>(genrer.Split(','));
+		var genreList = new List<dynamic>();
+		
+		foreach (var genre in genreArray){
+			string genreString = umbraco.library.GetPreValueAsString(Convert.ToInt32(genre));
+			var gString = "<a class=\"genre\" href=\"/events#genres="+@urlify(genreString)+"\">"+@genreString+"</a>";
+			genreList.Add(gString);				
+			
+		}
+		
+		@Html.Raw(string.Join(", ", genreList));
+		
+	}
+}

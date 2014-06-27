@@ -1,0 +1,43 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+	
+@{
+
+	foreach (var page in Model.Children.Where("Visible"))
+	{
+	   
+	   <div class="col gu6">
+	   <h2 class="normal">@page.Name</h2>	
+		<div class="row">
+		@if (page.Children.Where("Visible").Count() > 0)
+	   {
+		  
+			 foreach (var subpage in page.Children.Where("Visible"))
+			 {
+				 
+				var thumbUrl = subpage.HasValue("images") ? subpage.MediaById(subpage.GetPropertyValue("images")).umbracoFile : "";
+				 
+				 
+				 <div class="col gu4r">
+					 <div class="imgwrapper">
+						 <img src="/imagegen.ashx?image=@thumbUrl&amp;width=262" alt="@subpage.Name">
+					 </div>
+					 <div class="persondata">
+					 <h5>@subpage.Name</h5>
+					 <p>
+						 <span class="stilling">@subpage.GetPropertyValue("position")</span>
+						<a href="mailto:@subpage.GetPropertyValue("email")">@subpage.GetPropertyValue("email")</a><br/>
+						@subpage.GetPropertyValue("tlf")
+						 </p>
+					 </div>
+				 </div>
+				
+			 }
+
+	   }
+		</div>
+	   
+	   </div>
+	}
+	
+
+}

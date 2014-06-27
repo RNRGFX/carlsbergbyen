@@ -1,0 +1,72 @@
+body{	background: #222;}
+
+#container .col.gu3{height: 430px;}
+#container .col.gu3.left .inner{margin-right: 30px;}
+#container .col.gu3.right .inner{margin-left: 30px;}
+#container .col.gu3 .inner .meta{padding: 5px 0 12px; color: #978c86}
+#container .col.gu3 .inner .meta .date, .col.gu3 .inner .meta .count{color: #000; margin: 0 3px;}
+#container .col.gu3 .inner .meta .secondary{float: right;}
+#container .col.gu3 .inner h4{color: white}
+#container .col.gu3 .inner .description p{color: #978c86; font-weight: normal; margin: 10px 0}
+
+.imgwrapper{max-height: 263px;	overflow: hidden;border: 1px solid #353535;width: 520px; position: relative}
+.imgwrapper img{float: left;}
+
+/* gallery single */
+
+#container.single h1{color: white; margin-bottom: -10px}
+#container.single .description p{color: #959090; font-size: 14px; margin: 0 0 30px;}
+#container.single .sortingOptions{text-align: center; margin-bottom: 30px; color: white;}
+#container.single .sorter:before{background: url(/img/sorterArrowsNoBackWhite.png) no-repeat left bottom}
+
+#container.single .sorter[asc="true"]:before{background-position: left bottom}
+#container.single .sorter[asc="false"]:before{background-position: left top}
+#container.single .sorter[asc="true"]:hover:before{background-position: right bottom}
+#container.single .sorter[asc="false"]:hover:before{background-position: right top}
+
+#container.single .imgwrapper{border: none; height: 189px; overflow: hidden; background: black; opacity: 0; transition: opacity 300ms; }
+
+#container.single .galleryItem{overflow: hidden; transition: none; margin-bottom: 11px}
+#container.single .imagedata {position: absolute;background: rgba(20,21,19,0.90);bottom: -11px;display: block; padding-left: 0}
+#container.single .imagedata div{font-family: 'Ministry-Light'; font-size: 10px; color: white; text-align: center; text-transform: uppercase; letter-spacing: 0.03em; max-height: 0; transition:max-height 200ms; overflow: hidden; line-height: 40px;}
+#container.single .imagedata div span{color: #959090;}
+#container.single .galleryItem:hover .imagedata div.active{max-height: 40px;}
+
+#container.single .imgwrapper .arrow{
+	text-decoration: none;
+	display: block;
+	position: absolute;
+	left: 116px;
+	top: 56px;
+	width: 42px;
+	height: 42px;
+	background: url(../img/read-more-black.png) no-repeat;
+	transition: all 200ms;
+	z-index: 10;
+	opacity: 0;
+
+}
+
+#container.single .galleryItem:hover .imgwrapper .arrow{
+	opacity: 0.8;
+}
+
+
+@media only screen and (min-width: 960px) and (max-width: 1240px){
+	.imgwrapper {width: 436px}
+}
+
+@media only screen and (min-width: 760px) and (max-width: 960px){
+	.imgwrapper {width: 352px}
+}
+
+@media only screen and (max-width: 760px){
+	.imgwrapper {width: 100%; height: auto}
+	#content .right h4{font-size: 35px;}
+	
+	#container .col.gu3.left .inner {margin-right: 0px;}
+	#container .col.gu3.right .inner {margin-left: 0px;}
+	#container.single .galleryItem{width: 100%}
+	#container.single .imgwrapper{height: auto; overflow: visible}
+	#container.single .imagedata div{font-size: 16px}
+}

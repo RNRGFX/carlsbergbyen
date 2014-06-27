@@ -1,0 +1,66 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+	
+}
+
+@section head{
+	<link rel="stylesheet" href="/css/omraade_map.css">
+}
+
+<div id="container" class="normal english">
+	
+
+<!-- temp fix: -->
+<div class="clearfix top-padding"></div>
+    
+    <article>
+		<div id="content" class="main">
+		
+		        <div class="main gu6">
+		        	<div class="row">
+						<div class="col gu4">
+							<h1 class="normal">@Model.Content.Name</h1>
+								
+							<div id="actions">
+								<a href="#" class="shareholder yellowbutton"></a>
+								<a href="javascript:window.print();" class="print yellowbutton"></a>
+									
+								@{Html.RenderPartial("Sharer");}
+							</div>
+							<div class="clearfix"></div>
+							<div class="description">							
+								@Model.Content.GetPropertyValue("description")
+							</div>	
+							<div class="bodytext">							
+								@Model.Content.GetPropertyValue("bodyText")
+							</div>
+						</div>
+						
+						<div class="col gu2 right">
+							<div class="clearfix spacing45"></div>
+							<h2 class="top">CURRENT DEVELOPMENT PROJECTS IN THE CARLSBERG CITY DISTRICT
+</h2>
+							
+							<div class="row">
+								@Umbraco.RenderMacro("ListEnglishSubpages")
+							</div>
+								
+							<div class="clearfix"></div>
+							@if(CurrentPage.HasValue("galleryLink")){
+								var node = Umbraco.TypedContent(CurrentPage.galleryLink);
+
+								<a class="gallerylink" href="@node.Url">Gå til galleri</a>		
+							}
+								
+								
+							</div>
+		        	</div>
+		        </div>
+			</div>
+		</div>
+    </article>
+</div><!-- end #container -->

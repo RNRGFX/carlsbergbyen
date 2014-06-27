@@ -1,0 +1,119 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Globalization
+
+@using Examine
+@using Examine.SearchCriteria
+@using UmbracoExamine
+@using Examine.LuceneEngine.SearchCriteria;
+
+
+ 
+@{
+  var searchString = Request["searchstring"];
+  if (!String.IsNullOrEmpty(searchString))
+  {
+	var Searcher = ExamineManager.Instance.SearchProviderCollection["ExternalSearcher"];
+	var searchCriteria = Searcher.CreateSearchCriteria(BooleanOperation.Or);
+
+	@* For fuzzy: 
+	searchString.Fuzzy(0.1f).Value.MultipleCharacterWildcard() *@
+	  
+	var query = searchCriteria.Field("nodeName", searchString.MultipleCharacterWildcard())
+		.Or().Field("bodyText", searchString.MultipleCharacterWildcard())
+		.Or().Field("description", searchString.MultipleCharacterWildcard()).Compile();
+	
+	var searchResults = Searcher.Search(query).OrderByDescending(x => x.Fields["nodeTypeAlias"]).Take(20);
+	  
+    foreach (var c in searchResults)
+    {
+      <div class="row gu6 result">
+		  
+		@*c.Fields["nodeTypeAlias"]*@
+		@{
+		 	var node = Library.NodeById(c.Id);
+			var url = "";
+			var date = node.CreateDate.ToString("dd. MMMM yyyy"); 
+			if(node.Parent.NodeTypeAlias == "Oversigtsside6Felter"){
+				url = umbraco.library.NiceUrl(node.Parent.Id);
+			} else {
+				url = umbraco.library.NiceUrl(c.Id);
+			}
+			
+			
+			if (node.HasProperty("OrgCreateDate")){
+				var importDate = node.GetPropertyValue("OrgCreateDate");				
+				var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+							
+				if(importDate.ToString().IndexOf("Z") != -1)
+				{
+					dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+				}
+				
+				var convertDate = DateTime.ParseExact(importDate, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+				date = (node.GetPropertyValue("OrgCreateDate") != "") ? convertDate.ToString("dd. MMMM yyyy") : date;
+			}
+			
+			
+		}
+		<a href="@url">
+		
+        <div class="col gu3 title">@c.Fields["nodeName"]</div>
+			
+		<div class="col gu2 cat">
+			
+			
+		@{
+			var breadcrumbs = new List<dynamic>();
+			
+			foreach(var level in node.Ancestors().Where("Visible && Level >= 2")){
+				breadcrumbs.Add(level.Name);
+			}
+			
+			if (node.HasValue("category")){
+				var category = node.GetPropertyValue("category");
+				List<string> catArray = new List<string>(category.Split(','));
+				breadcrumbs.Add(catArray[0]);
+			}
+			
+			if (node.HasValue("genrer")){
+				var genres = node.GetPropertyValue("genrer");
+				List<string> genreArray = new List<string>(genres.Split(','));
+				breadcrumbs.Add(genreArray[0]);
+			}
+		
+		}
+		
+		@string.Join(" > ", breadcrumbs)
+		</div>
+		<div class="col gu1 date">@date</div>
+		</a>	
+		
+		
+        @*
+			
+			@if(c.Fields.Keys.Contains("bodyText"))
+        {
+          var bodyText = c.Fields["bodyText"];
+          if (bodyText.Length>100)
+          {
+            bodyText = bodyText.Substring(0,100);
+          }
+          <p>@Html.Raw(bodyText)</p>
+        }
+		
+		@if(c.Fields.Keys.Contains("description"))
+        {
+          var description = c.Fields["description"];
+          if (description.Length>100)
+          {
+            description = description.Substring(0,100);
+          }
+          <p>@Html.Raw(description)</p>
+        }
+
+		*@
+		
+      </div>
+    }
+  }
+}

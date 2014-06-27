@@ -1,0 +1,75 @@
+﻿
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{	
+	int iStart = 0;	
+	
+	foreach (var page in Model.Children().Where("Visible"))
+        {
+		
+		string start = iStart % 2 == 0 ? "left" : "right";
+			
+		int imgCount = 0;
+				
+		var thumbUrl ="";
+		DateTime newestDate = new DateTime();
+	
+		if (page.HasValue("mediaFolder")){
+		
+			var mediaFolders = page.GetPropertyValue("mediaFolder").Split(',');				
+		
+			
+			foreach( var mediaFolder in mediaFolders){
+				@* get image folder *@
+				var imgfolder =  Library.MediaById(mediaFolder);
+
+				@* get all images in all folders below*@				
+				foreach(dynamic photo in imgfolder.Descendants("Image")){
+					imgCount++;
+					
+					@* update newest date and set thumbUrl to newest image *@
+					if (newestDate < photo.CreateDate){
+						newestDate = photo.CreateDate;
+						thumbUrl = photo.umbracoFile;
+					}					
+				}				
+			}
+		}
+			
+			
+		@* manual selected images overwrite *@						
+		if (page.HasValue("images"))
+		{
+									
+			var imagesList = page.GetPropertyValue<string>("images");
+			List<string> imagesArray = new List<string>(imagesList.Split(','));
+			thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+			
+			foreach( var img in imagesArray){
+				imgCount++;
+			}
+		}
+			
+		iStart++;
+						
+		<div class="col gu3 @start">
+			<div class="inner">
+			<a href="@page.Url">
+				<div class="imgwrapper">
+					<span class="arrow"></span>
+					<img src="/imagegen.ashx?image=@thumbUrl&amp;width=520"  alt="@page.Name">
+				</div>
+				<div class="meta">Seneste billede <span class="date"> @newestDate.ToString("d. MMM yyyy")</span><span class="secondary"><span class="count">@imgCount </span> billeder i kategorien</span></div>
+				<div class="right">
+					<h4>@page.Name</h4>
+	
+					<div class="description">
+						@Html.Raw(page.GetPropertyValue("description"))	
+					</div>
+				</div>
+			</a>
+			</div>			
+		</div>
+	}	
+	
+}

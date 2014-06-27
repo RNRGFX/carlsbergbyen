@@ -1,0 +1,44 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+
+@{
+    var startNodeID = Parameter.nodeId;
+	int limit = Convert.ToInt32(Parameter.limit);
+	int startIndex = Convert.ToInt32(Parameter.startIndex);
+	var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+	int i = 0;
+}
+
+@if (startNodeID != null)
+{
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+    
+    if (startNode.Children.Where("Visible").Any())
+    {
+        <ul class="event-list">
+            @foreach (var page in startNode.Children.Where("Visible").OrderBy("repeatable, startEndDate").Skip(startIndex))
+            {
+				
+				
+				
+				var curDate = DateTime.Now.Date.ToString("yyyyMMdd");
+				var dateRange =  page.GetPropertyValue<Diplo.DateRangePicker.DateRange>("startEndDate");
+				List<string> dateArray = new List<string>(dateRange.Split(','));
+				var endDate = DateTime.ParseExact(dateArray[1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal).ToString("yyyyMMdd");
+				
+				if (Convert.ToInt32(endDate) >= Convert.ToInt32(curDate) && i <= limit){
+					
+               		<li>
+						<div class="meta"><span class="date">@page.dateField1</span><span class="time">@page.dateField2</span></div>
+							
+						<a href="@page.Url" class="reallink">@page.Name</a>
+					</li>
+					
+					i++;		
+				}
+            }
+        </ul>
+    }    
+}

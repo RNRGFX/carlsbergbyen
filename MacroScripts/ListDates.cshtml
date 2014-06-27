@@ -1,0 +1,39 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{
+	string openHours = Model.GetPropertyValue("openhours").Replace("\"", "");
+	List<string> openHoursList = openHours.Split(new char[]{'[',']',','},StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+	string[] dayNames = {"Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag", ""};
+	
+	int iStart = 0;
+	int dayIndex = 0;
+	var prevDay = "";
+	foreach(var day in openHoursList){
+		bool first = iStart % 3 == 0 ? true : false;
+		int secNum = iStart-1;
+		bool second = secNum % 3 == 0 ? true : false;
+		int thirdNum = iStart-2;
+		bool third = thirdNum % 3 == 0 ? true : false;
+		
+			
+		if(second && !String.IsNullOrEmpty(day) && day != "null"){
+			<span class="weekday">@dayNames[dayIndex] </span>
+			<span class="time">@day </span><span> - </span>
+		}
+		
+		if(third && !String.IsNullOrEmpty(day) && day != "null"){
+			<span class="time">@day </span><br/>
+
+		}
+		
+		
+		if(third){
+
+			dayIndex++;
+		}
+		
+		iStart ++;
+		
+		
+	}
+}

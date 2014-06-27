@@ -1,0 +1,208 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{Layout = null;}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="da" xml:lang="da" > <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="da" xml:lang="da" > <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="da" xml:lang="da" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="da" xml:lang="da" > <!--<![endif]-->
+<head>
+        <meta charset="utf-8"/>
+		@{
+			var title = (Model.Content.Url == "/forside/") ? "Carlsberg Byen" : "Carlsberg Byen | "+ @Model.Content.Name;
+		}	
+        <title>@title</title>
+        <meta name="description" content="Udviklingsselskabet Carlsberg Byen P/S udvikler bykvarteret Carlsberg Byen på den gamle bryggerigrund i hjertet af København."/>
+		<meta property="og:title" content="@Model.Content.Name"/>
+		<meta property="og:description" content="@Umbraco.StripHtml(CurrentPage.description)" />
+		<meta property="og:url" content="http://@HttpContext.Current.Request.Url.Host@Model.Content.Url"/>
+		<meta name="google-site-verification" content="huoTiCaM1bMZdmMS3lzyalqwATtlkT4N6cJrTlEnYOY" />
+		@Functions.GetViewPort()
+        <link rel="stylesheet" href="/css/normalize.min.css" />
+		<link rel="stylesheet" href="/css/fonts.css" />
+        <link rel="stylesheet" href="/css/main.css?v1.1" />
+        <link rel="stylesheet" href="/css/grid.css?v1.1" />
+		<link rel="stylesheet" href="/css/form.css" />
+		<link rel="apple-touch-icon" href="/img/apple-touch-icon.png"/>
+        <script src="/scripts/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="/scripts/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="/scripts/imagesloaded.pkgd.min.js"></script>
+		<script src="/Scripts/jquery.cookie.js"></script>
+		<script src="/scripts/waypoints.min.js"></script>
+        <script src="/scripts/waypoints-sticky.min.js"></script>
+		<script src="/scripts/waypoints-infinite.js"></script>
+        <script src="/scripts/jquery.cycle2.min.js"></script>
+		<script src="/scripts/jquery.cycle2.swipe.min.js"></script> 
+        <script src="/scripts/detectmobilebrowser.js"></script>
+        <script src="/scripts/jquery.linkify.min.js"></script>
+        <script src="/scripts/plugins.js"></script>
+        
+
+        <script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-3223045-14', 'carlsbergbyen.dk');
+		  ga('send', 'pageview');
+
+		var minimenu = false;
+		
+		</script>
+			
+			
+		<script src="/scripts/main.js?v1.1"></script>
+			
+  		@RenderSection("head",false)	
+	
+</head>
+<body>
+	
+	
+    <div id="header">
+    	
+	    <div class="main gu6">
+	    <div id="toplinks">
+		  <div class="toplinks pos-left"><a href="/english">english</a><a href="/presse">presse</a><a href="/galleri">Galleri</a></div>
+		  <div class="toplinks pos-right"><a href="#" class="newsletters">nyhedsbreve</a><a href="/kontakt">kontakt</a><a href="#" class="search">søg</a></div>
+	    </div>
+		 <a href="/"><h3 id="teaser" class="pos-left">En levende historie <br/>i hjertet af københavn</h3></a>
+		  <div id="social" class="pos-right"><a href="https://www.facebook.com/CarlsbergByen" class="facebook" target="_blank"></a><a href="http://www.youtube.com/channel/UC9Sgo9ZLpQIet1vXfkL-jCg" target="_blank" class="youtube"></a><a href="http://instagram.com/carlsbergbyen" target="_blank" class="instagram"></a></div>
+		  <a id="cbb-logo" href="/"><img src="/img/cbb-logo.png" alt="Carlsberg byen"/></a>
+		  <a id="elephant-logo" href="/"><img src="/img/elephant-icon.png" alt="Carlsberg byen"/></a>
+		  
+		  <div id="menu-drop"></div>
+		  <div id="trigger"></div>
+		  <a href="#" id="msearch" class="search"> </a>
+			</div> 
+			 
+	 <div id="navigation" class="row">
+	  @Umbraco.RenderMacro("Topmenu")	  
+	  </div>
+			  
+	<div id="newsletter" class="topdrop">
+	@{
+		
+		if (Model.Content.Name != "Interesseliste ejerbolig"){
+		Html.RenderPartial("Mailchimp");
+		}
+	}
+        
+
+    </div>
+	
+	<div id="search" class="topdrop">
+		<div class="row bottomline">
+			<div class="main gu6">
+				<div class="col row">
+					<form method="post">
+					<input class="search" type="text" id="sitesearch" name="searchstring" value="@Request["searchstring"]" placeholder="Søg" autocomplete="off"/>
+					</form>
+					<a href="#" class="clearFilter">Ryd søgning <span>(esc)</span></a>
+					<a href="#" class="closer"></a>
+				</div>
+			</div>
+		</div><!-- end bottomline -->
+		
+		
+		<div class="main gu6">
+			
+
+			<div class="row col" id="searchresults">
+					 
+				@if (IsPost) {
+				
+				<div class="row"><div class="row headers">
+					<div class="col gu3 yellow">Søgeresultat:</div><div class="col gu2 yellow">Kategori:</div><div class="col gu1 yellow">Dato:</div>
+					</div></div>	
+				
+				  @RenderPage("Search.cshtml")
+				}
+				
+
+			</div>	
+		</div>	
+	</div> <!-- end #search -->
+			
+</div>
+@RenderBody()
+<div id="footer">
+		<div class="main gu6">
+			<div class="row">
+			
+				<div class="col gu1">
+					<h4>Carlsberg Byen</h4>
+					<p>Carlsberg Byen P/S<br/>
+					Olivia Hansens Gade 2 <br/>
+					1799 København V <br/>
+					info@carlsbergbyen.dk<br/> 
+					CVR 33 64 84 99<br/>
+					Tlf: +45 70 22 17 99<br/>
+					<br/>
+					<a href="/cookies">Cookies & indsamling af data</a>
+					</p>
+				</div>
+				
+				<div class="col gu1">
+					<h4>Redaktion</h4>
+					<p>Marianne Wehlast<br/>
+					Britt Christensen<br/>
+					Ansv.<br/>
+					Morten G. Fossum
+					</p>
+				</div>
+				
+				<div class="mclear"></div>
+				
+				
+				<div class="col gu1">
+					<h4>sitemap</h4>
+					<p>@Umbraco.RenderMacro("TopSitemap")
+					</p>
+				</div>
+				
+				<div class="col gu1">
+					<h4>carlsberg <br/>byen app</h4>
+					<p>Med vores gratis app til iPhone og Android kan du altid finde noget at lave i Carlsberg Byen - og få hjælp til at finde derhen.<br/>
+					<br/>
+					<a href="https://itunes.apple.com/dk/app/carlsberg-byen/id567782888?mt=8&amp;uo=4">Download til iOS</a><br/>
+					<a href="http://play.google.com/store/apps/details?id=com.payback.carlsbergbyen">Download til Android</a>
+					</p>
+				</div>
+				
+				<div class="mclear"></div>
+				
+				<div class="col gu1">
+					<h4>Udlejning</h4>
+					<p>
+					Kontakt:<br/>
+					
+					<p>
+					Ejendomschef <br/>
+					Lars Wilsdahl<br/>
+					Telefon: +45 22 15 14 35<br/>
+					lw@carlsbergbyen.dk<br/>
+					
+					</p>
+				</div>
+				
+				<div class="col gu1">
+					<h4>Nyhedsbreve</h4>
+					<p><a href="#" id="newsletterSignup">Skriv dig op til at modtage nyhedsbreve</a>
+					
+					</p>
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+	
+	<div id="cookies">
+		<div class="inner gu6"><a href="#" class="closer"></a>Carlsberg Byen bruger cookies og lokal lagring bl.a. for at huske dine indstillinger statistik. Ved at bruge sitet accepterer du dette. Læs mere <a href="/cookies">her</a>
+			</div>
+	</div>
+
+     	
+    </body>
+</html>

@@ -1,0 +1,118 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+}
+
+@*this content will be rendered in the named section head*@
+
+@{
+	DateTime dt = DateTime.Parse(System.DateTime.Now.ToString());
+}
+
+@section head{
+	<link rel="stylesheet" href="/css/cbb-theme/jquery-ui-1.10.4.custom.css">
+	<script type="text/javascript" src="/scripts/jquery-ui-1.10.4.custom.min.js"></script>
+	<script type="text/javascript" src="/scripts/i18n/jquery.ui.datepicker-da.min.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.debouncedresize.js"></script>
+	<script type="text/javascript" src="/scripts/isotope.pkgd.min.js"></script>
+
+	<!--script type="text/javascript" src="/scripts/masonry.mod.js"></script-->
+	<script type="text/javascript" src="/scripts/jquery.ba-bbq.min.js"></script>
+  	<script type="text/javascript" src="/scripts/eventOverview.js?v1.1"></script>
+  	<script type="text/javascript">
+	  	var currentDate	= "@dt.ToString("yyyyMMdd")"; 
+	  	var oneWeekFromNow = "@dt.AddDays(7).ToString("yyyyMMdd")"; 
+	  	var twoWeeksFromNow = "@dt.AddDays(14).ToString("yyyyMMdd")";
+	  	var nextMonth = "@dt.AddMonths(1).ToString("yyyyMMdd")"; 	
+  	</script>
+}
+
+
+
+
+<div id="container" class="news-overview">
+	
+	<div class="clearfix top-padding"></div>
+	
+
+
+	
+	<article>
+		<div id="content" class="main event-overview">
+			<div class="main gu6">
+			
+				
+					<h1>Events i carlsberg byen</h1>
+					
+					<div class="pos-right" id="searchbox">
+						<div class="inner gu1">
+							<span class="text">Søg</span>
+							<div class="main hidden">									
+								<input class="search" type="text" id="eventsearch" placeholder="Søg i events">
+								<a href="#" class="closer"></a>								
+							</div>
+						</div>
+					</div>
+					<div id="eventSorterDropDowns">
+	
+						
+						
+						
+						<div class="main gu6">
+							<div class="row">
+								<div class="select col gu2" id="date">
+									<div class="selector">Vælg periode: </div><a href="#" class="closer"></a>
+									<ul class="dropdown gu2">
+										<li><a href="#" class="fixedperiod" id="currentDate">i dag</a></li>
+										<li><a href="#" class="fixedperiod" id="oneWeekFromNow">1 uge frem</a></li>
+										<li><a href="#" class="fixedperiod" id="twoWeeksFromNow">2 uger frem</a></li>
+										<li><a href="#" class="fixedperiod" id="nextMonth">Kommende måned</a></li>
+										<li>
+										<div class="datepickers">
+											<div class="choosePeriode">Vælg periode</div>
+											
+											<input type="text" id="startdate" class="datepicker" placeholder="Fra dato">
+											<input type="text" id="enddate" class="datepicker" placeholder="Til dato">
+										</div>										
+										</li>
+									</ul>
+								</div>
+												
+								<div class="select col gu2" id="venues">
+									<div class="selector">Vælg venue:</div><a href="#" class="closer"></a>
+									<ul class="dropdown gu2">						
+										@Umbraco.RenderMacro("ListVenues", new {nodeId="2251"})
+									</ul>
+								</div>					
+								
+								
+								<div class="select col gu2" id="genres">
+									<div class="selector">Vælg genre:</div><a href="#" class="closer"></a>
+									<ul class="dropdown gu2">						
+										@Umbraco.RenderMacro("ListGenres")
+									</ul>
+								</div>	
+							</div>	
+						</div>	
+					</div><!-- end #eventSorterDropDown -->
+					
+					<div class="sortingOptions gu6">
+						<div class="desc">Sorter efter:</div> 
+						<div class="sorter" rel="date" data-asc="true">dato</div>
+						<div class="sorter" rel="venue" data-asc="true">venue</div>
+						<div class="sorter" rel="genre" data-asc="true">genre</div>
+					</div>
+					<div class="clearfix"></div>
+				
+					
+				<div class="row">
+					<div class="eventcontainer">
+						@Umbraco.RenderMacro("ListEvents", new {nodeId="2277"})	
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</div>
+
+					

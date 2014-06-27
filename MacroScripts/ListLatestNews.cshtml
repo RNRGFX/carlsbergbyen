@@ -1,0 +1,65 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+
+@{
+    var startNodeID = Parameter.nodeId;
+	int limit = Convert.ToInt32(Parameter.limit);
+	int startIndex = Convert.ToInt32(Parameter.startIndex);
+}
+
+@if (startNodeID != null)
+{
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+    
+    if (startNode.Children.Where("Visible").Any())
+    {
+        <ul class="news-list">
+            @foreach (var page in startNode.Children.Where("Visible").OrderBy("OrgCreateDate desc").Skip(startIndex).Take(limit))
+            {
+				
+				var importDate = page.GetPropertyValue("OrgCreateDate");
+				
+				
+				var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+				
+				 if(importDate.ToString().IndexOf("Z") != -1)
+				{
+					dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+				}
+				
+				
+				var convertDate = DateTime.ParseExact(importDate, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+				var date = (page.GetPropertyValue("OrgCreateDate") != "") ? convertDate.ToString("dd. MMMM yyyy") : page.CreateDate.ToString("dd. MMMM yyyy");	
+				var Class = "";
+					
+				var category = page.HasValue("category") ? page.GetPropertyValue("category") : "Generelle Nyheder";
+	
+				if (page.HasValue("category")){
+						
+					List<string> catArray = new List<string>(category.Split(','));
+					var categoryString = new List<dynamic>();
+					
+					foreach (var cat in	catArray){
+						var href = cat.ToString().Replace(" ", "%20");
+						var aString = "<a href=\"/nyheder?category="+@href+"\">"+@cat+"</a>";
+						categoryString.Add(aString);				
+						
+					}
+					
+					category = string.Join(", ", categoryString);
+				}
+				
+				
+                <li>
+						<div class="meta"><span class="category">@Html.Raw(category)</span><span class="date">@date</span></div>
+							@if(Model.Id == @page.Id){
+								Class = "active";
+							}
+						<a href="@page.Url" class="reallink @Class">@page.Name</a>
+				</li>
+            }
+        </ul>
+    }    
+}

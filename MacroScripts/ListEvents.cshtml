@@ -1,0 +1,111 @@
+﻿@using System
+@using System.Text.RegularExpressions
+@using System.Globalization
+
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+	
+	
+
+@{
+    var startNodeID = Parameter.nodeId;
+	var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+
+}
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	link = Regex.Replace(link, @"[é]+", "e");	
+	@link;	
+}
+
+@if (startNodeID != null)
+{
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+    
+    if (startNode.Children.Where("Visible").Any())
+    {
+            foreach (var page in startNode.Children.Where("Visible").OrderBy("repeatable, startEndDate"))
+            {
+				
+				var venueName = "";
+				var thumbUrl = "";
+				var genres = umbraco.library.GetPreValueAsString(Convert.ToInt32(page.GetProperty("genrer2").Value));
+				var curDate = DateTime.Now.Date.ToString("yyyyMMdd");
+				var curWeekDay = DateTime.Now.Date.ToString("dddd");
+				
+				
+				
+				
+				var dateRange =  page.GetPropertyValue<Diplo.DateRangePicker.DateRange>("startEndDate");
+				
+				
+				
+				if (dateRange != "" && page.HasValue("startEndDate") ){
+					
+					
+					List<string> dateArray = new List<string>(dateRange.Split(','));
+					
+					
+					var startDate = DateTime.ParseExact(dateArray[0], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal).ToString("yyyyMMdd");
+					var endDate = DateTime.ParseExact(dateArray[1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal).ToString("yyyyMMdd");
+					
+					if (Convert.ToInt32(endDate) >= Convert.ToInt32(curDate)){
+					
+						if (page.HasValue("images"))
+						{
+							
+							var imagesList = page.GetPropertyValue<string>("images");
+							List<string> imagesArray = new List<string>(imagesList.Split(','));
+							thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+							
+						}
+						
+						
+						string openHours = page.openhours.Replace("\"", "");
+						List<string> openHoursList = openHours.Split(new char[]{'[',']',','},StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+		
+										
+						int iStart = 0;
+						foreach(var day in openHoursList){
+							bool start = iStart % 2 == 0 ? true : false;
+							if (!String.IsNullOrEmpty(day)){
+								
+								iStart ++;	
+							}
+							
+						}
+						
+						if (@page.venue != ""){
+							var venue = Library.NodeById(@page.venue);
+							venueName = venue.Name;
+						}
+			
+						
+		
+						<div class="gu2 isotope-item" id="@urlify(page.Name)" data-repeatable="@page.GetPropertyValue("repeatable")" data-venue="@urlify(venueName)" data-genrer="@urlify(genres)" data-startdate="@startDate"  data-enddate="@endDate" data-datenow="@curDate">
+							<a href="@page.Url" class="itemlink">
+								<div class="meta"><span class="date1">@page.dateField1</span><span class="date2">@page.dateField2</span><span class="venue">@venueName</span></div>
+								<div class="imgwrapper">
+									<span class="arrow"></span>
+									<img src="/imagegen.ashx?image=@thumbUrl&amp;height=184" alt="@page.Name">
+								</div>	
+								<div class="right">
+								<h4>@page.Name</h4>
+								<p>@page.GetPropertyValue("description")</p>
+								</div>
+							</a>
+						</div>
+									
+					}
+				}
+            }
+    }    
+}

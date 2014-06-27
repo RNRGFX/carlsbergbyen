@@ -1,0 +1,43 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using umbraco.MacroEngines
+@using System.Web.Script.Serialization;
+
+@{
+	
+	
+	
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+    var startNode = Library.NodeById(3243);
+	dynamic vNode = new DynamicNode(startNode);
+	var feed = new List<dynamic>();
+	var vidstedu = new List<dynamic>();
+	
+	
+	if (HttpContext.Current.Request.QueryString["random"] == "true")
+	{	
+		vNode = startNode.Children.Where("Visible").Random(1);
+		
+	} else {
+		vNode = startNode.Children.Where("Visible");	
+	}
+	
+	foreach (var vd in vNode)
+	{
+		
+		vidstedu.Add(vd.GetPropertyValue("vidsteDu"));
+	}
+	
+	feed.Add(new
+	{
+		updated = DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+		vidstedu = vidstedu,
+	 });
+		
+	
+			
+	var output = serializer.Serialize(feed).ToString().Substring(1);
+	output = output.Substring(0, output.Length-1);
+	
+}
+
+@Html.Raw(output)

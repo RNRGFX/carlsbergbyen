@@ -1,0 +1,135 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System
+@using System.Text.RegularExpressions
+@using System.Globalization
+@using System.Collections.Generic;
+
+@using umbraco.MacroEngines
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	@link;	
+}	
+
+@{
+    var startNodeID = Parameter.nodeId;
+	int startIndex = (Parameter.startIndex != "") ? Convert.ToInt32(Parameter.startIndex) : Convert.ToInt32(HttpContext.Current.Request.QueryString["page"]);
+	
+	string inCategory = Parameter.inCategory;
+	inCategory = String.IsNullOrEmpty(inCategory) ? "" : inCategory;
+
+	
+	string notCategory = Parameter.notCategory;
+	notCategory = String.IsNullOrEmpty(notCategory) ? "" : notCategory;
+
+	
+	string classes = (Parameter.classes != "") ? Parameter.classes : "";
+
+	int limit = (Parameter.limit != "") ? Convert.ToInt32(Parameter.limit) : 10;
+	int page = (startIndex-1) * 10;
+}
+
+
+
+@if (startNodeID != null)
+{
+	
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+	dynamic news = new DynamicNode(startNode);
+	
+	
+	if (!String.IsNullOrEmpty(inCategory))
+	{	
+		news = startNode.Children.Where("Visible && category.Contains(@0)", inCategory).OrderBy("OrgCreateDate desc").Skip(startIndex).Take(limit);
+		
+	} else if (!String.IsNullOrEmpty(notCategory))
+	{	
+		news = startNode.Children.Where("Visible && !category.Contains(@0)", notCategory).OrderBy("OrgCreateDate desc").Skip(startIndex).Take(limit);
+		
+	} else {
+		news = startNode.Children.Where("Visible").OrderBy("OrgCreateDate desc").Skip(startIndex).Take(limit);	
+	}
+		
+		
+            
+		foreach (var newspage in news)
+		{
+			
+			
+			var category = newspage.HasValue("category") ? newspage.GetPropertyValue("category") : "Generelle nyheder";
+			
+			if (newspage.HasValue("category")){
+				
+				List<string> catArray = new List<string>(category.Split(','));
+				var categoryString = new List<dynamic>();
+				
+				foreach (var cat in	catArray){
+					var aString = "<a href=\"/nyheder?category="+@cat+"\">"+@cat+"</a>";	
+					categoryString.Add(aString);
+					
+					
+				}
+				
+				category = string.Join(", ", categoryString);
+				
+			}
+			
+						
+				var thumbUrl = "";
+				
+				if (newspage.HasValue("images"))
+				{
+					
+					var imagesList = newspage.GetPropertyValue<string>("images");
+					List<string> imagesArray = new List<string>(imagesList.Split(','));
+					thumbUrl = newspage.MediaById(imagesArray[0]).umbracoFile;
+					
+				} else {
+					thumbUrl = newspage.GetPropertyValue("thumbnail");
+				}
+				
+				var importDate = newspage.GetPropertyValue("OrgCreateDate");
+				
+				var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+					
+				if(importDate.ToString().IndexOf("Z") != -1)
+				{
+					dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+				}
+				
+				var convertDate = DateTime.ParseExact(importDate, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+				var date = (newspage.GetPropertyValue("OrgCreateDate") != "") ? convertDate.ToString("dd. MMMM yyyy") : newspage.CreateDate.ToString("dd. MMMM yyyy");	
+	
+				
+				<div class="item @classes">
+					
+					<div class="meta">
+						<span class="category">@Html.Raw(category)</span>
+						<span class="date">@date</span>
+					</div>
+					<a href="@newspage.Url" class="newslink">
+						<div class="imgwrapper">
+							<span class="arrow"></span>
+							<img src="/imagegen.ashx?image=@thumbUrl&amp;width=750">
+						</div>
+						<div class="right">
+						<h4>@newspage.Name</h4>
+						<p>@newspage.GetPropertyValue("description")</p>
+						</div>
+						<div class="clearfix"></div>
+					</a>
+				</div>
+
+			
+
+
+						
+		}
+}

@@ -1,0 +1,42 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+
+@using umbraco.MacroEngines
+@inherits DynamicNodeContext
+@using System.Xml.XPath
+@using System.Text.RegularExpressions	
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	@link;	
+}	
+
+@{
+
+  try
+      {
+        var baseNode = Model.AncestorOrSelf();
+        XPathNodeIterator iterator = umbraco.library.GetPreValues(3609);
+        iterator.MoveNext(); //move to first
+        XPathNodeIterator preValues = iterator.Current.SelectChildren("preValue", "");
+        @*@preValues.Count*@
+            while (preValues.MoveNext())
+            {
+                string preValue = preValues.Current.Value;
+				<li><a href="#" class="genre" id="@urlify(preValue)">@preValue</a></li>
+                             
+            }
+        }
+        catch (Exception e)
+        {
+          @e.ToString()   
+        }
+
+}
+	

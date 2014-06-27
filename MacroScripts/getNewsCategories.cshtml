@@ -1,0 +1,25 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@using System.Text.RegularExpressions
+@using System.Globalization
+
+
+@{
+	var category = Model.HasValue("category") ? Model.GetPropertyValue("category") : "Generelle Nyheder";
+	
+	if (Model.HasValue("category")){
+			
+		List<string> catArray = new List<string>(category.Split(','));
+		var categoryString = new List<dynamic>();
+		
+		foreach (var cat in	catArray){
+			var aString = "<a href=\"/nyheder?category="+@cat+"\">"+@cat+"</a>";
+			categoryString.Add(aString);				
+			
+		}
+		
+		@Html.Raw(string.Join(", ", categoryString));
+	}
+	
+	
+}

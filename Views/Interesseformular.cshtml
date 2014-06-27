@@ -1,0 +1,820 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+	
+}
+
+@section head{
+	<link rel="stylesheet" href="/css/form.css">
+	<script src="/scripts/jquery.innerlabel.js"></script>
+		<style>
+		.toplinks .newsletters{display:none;}
+		</style>
+}
+
+<div id="container" class="normal">
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+
+    
+    <article>
+		<div id="content" class="main">
+		
+		        <div class="main gu6">
+		        	<div class="row">
+						<div class="col gu6">
+							<h1>Boliger i Carlsberg Byen</h1>
+							
+							<div class="bodytext col2">
+								@Model.Content.GetPropertyValue("bodyText")
+							</div>
+							
+							<div id="interesseliste">
+								<!-- Begin MailChimp Signup Form -->
+								
+								
+								<div id="mc_embed_signup" class="boligform">
+								<form action="http://carlsbergbyen.us3.list-manage.com/subscribe/post?u=63c8b1e1104d039d4f0ddbed0&amp;id=179340c89a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+								
+								<div class="row gu6">
+										
+									<div class="gu4 col">	
+										<div class="mc-field-group">
+											<label class="placeholder" for="mce-FNAME">Navn  <span>*</span>
+										</label>
+											<input type="text" value="" name="FNAME" class="required" id="mce-FNAME">
+										</div>
+										<div class="mc-field-group">
+											<label class="placeholder" for="mce-EMAIL">E-mail adresse  <span>*</span>
+										</label>
+											<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+										</div>
+										<div class="mc-field-group">
+											<label class="placeholder" for="mce-ADDRESS">Adresse <span>*</span></label>
+											<input type="text" value="" name="ADDRESS" class="" id="mce-ADDRESS">
+										</div>
+
+										<div class="mc-field-group">
+											<label class="placeholder" for="mce-ZIP">Post nr. <span>*</span></label>
+											<input type="text" value="" name="ZIP" class="" id="mce-ZIP">
+										</div>
+										<div class="mc-field-group">
+											<label class="placeholder" for="mce-CITY">By </label>
+											<input type="text" value="" name="CITY" class="" id="mce-CITY">
+										</div>
+										<div class="mc-field-group">
+											<label class="placeholder" for="mce-COUNTRY">Land </label>
+											<select name="COUNTRY" class="" id="mce-COUNTRY">
+									<option value=""></option>
+									<option value="Denmark">Danmark</option>
+												
+
+
+								
+								<option value="Afghanistan">Afghanistan</option>
+								<option value="Albania">Albanien</option>
+								<option value="Algeria">Algeriet</option>
+								<option value="Virgin Islands (U.S.)">Amerikanske Jomfruøer</option>
+								<option value="American Samoa">Amerikansk Samoa</option>
+								<option value="Andorra">Andorra</option>
+								<option value="Angola">Angola</option>
+								<option value="Anguilla">Anguilla</option>
+								<option value="Antarctica">Antarktis</option>
+								<option value="Antigua And Barbuda">Antigua og Barbuda</option>
+								<option value="Argentina">Argentina</option>
+								<option value="Armenia">Armenien</option>
+								<option value="Aruba">Aruba</option>
+								<option value="Australia">Australien</option>
+								<option value="Azerbaijan">Azerbaijan</option>
+								<option value="Bahamas">Bahamas</option>
+								<option value="Bahrain">Bahrain</option>
+								<option value="Bangladesh">Bangladesh</option>
+								<option value="Barbados">Barbados</option>
+								<option value="Belgium">Belgien</option>
+								<option value="Belize">Belize</option>
+								<option value="Benin">Benin</option>
+								<option value="Bermuda">Bermuda</option>
+								<option value="Bhutan">Bhutan</option>
+								<option value="Bolivia">Bolivia</option>
+								<option value="Bosnia and Herzegovina">Bosnien-Herzegovina</option>
+								<option value="Botswana">Botswana</option>
+								<option value="Bouvet Island">Bouvetøen</option>
+								<option value="Brazil">Brasilien</option>
+								<option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+								<option value="Virgin Islands (British)">Britiske Jomfruøer</option>
+								<option value="Brunei Darussalam">Brunei Darussalam</option>
+								<option value="Bulgaria">Bulgarien</option>
+								<option value="Burkina Faso">Burkina Faso</option>
+								<option value="Myanmar">Burma</option>
+								<option value="Burundi">Burundi</option>
+								<option value="Cambodia">Cambodia</option>
+								<option value="Cameroon">Cameroon</option>
+								<option value="Canada">Canada</option>
+								<option value="Cape Verde">Cape Verde</option>
+								<option value="Cayman Islands">Caymanøerne</option>
+								<option value="Central African Republic">Centralafrikanske Republik</option>
+								<option value="Chad">Chad</option>
+								<option value="Chile">Chile</option>
+								<option value="Christmas Island">Christmas Island</option>
+								<option value="Cocos (Keeling) Islands">Cocosøerne</option>
+								<option value="Colombia">Colombia</option>
+								<option value="Comoros">Comorerne</option>
+								<option value="Congo">Congo</option>
+								<option value="Cook Islands">Cookøerne</option>
+								<option value="Costa Rica">Costa Rica</option>
+								<option value="Croatia">Croatien</option>
+								<option value="Cuba">Cuba</option>
+								<option value="Curacao">Curacao</option>
+								<option value="Cyprus">Cypern</option>
+								<option value="Denmark">Danmark</option>
+								<option value="Djibouti">Djibouti</option>
+								<option value="Dominica">Dominica</option>
+								<option value="Dominican Republic">Dominikanske Republik</option>
+								<option value="Ecuador">Ecuador</option>
+								<option value="Egypt">Egypten</option>
+								<option value="Cote D'Ivoire">Elfenbenskysten</option>
+								<option value="El Salvador">El Salvador</option>
+								<option value="Eritrea">Eritrea</option>
+								<option value="Estonia">Estonien</option>
+								<option value="Ethiopia">Ethiopien</option>
+								<option value="Falkland Islands">Falklandsøerne</option>
+								<option value="Faroe Islands">Færøerne</option>
+								<option value="Fiji">Fiji</option>
+								<option value="Philippines">Filippinerne</option>
+								<option value="Finland">Finland</option>
+								<option value="France">Frankring</option>
+								<option value="French Guiana">Fransk Guyana</option>
+								<option value="French Polynesia">Fransk Polynesien</option>
+								<option value="French Southern Territories">Franske Sydlige og Antarktiske Territorier</option>
+								<option value="United Arab Emirates">Forenede Arabiske Emirater</option>
+								<option value="Gabon">Gabon</option>
+								<option value="Gambia">Gambia</option>
+								<option value="Georgia">Georgien</option>
+								<option value="Ghana">Ghana</option>
+								<option value="Gibraltar">Gibraltar</option>
+								<option value="Greece">Grækenland</option>
+								<option value="Greenland">Grønland</option>
+								<option value="Grenada">Grenada</option>
+								<option value="Guadeloupe">Guadeloupe</option>
+								<option value="Guam">Guam</option>
+								<option value="Guatemala">Guatemala</option>
+								<option value="Guernsey">Guernsey</option>
+								<option value="Guinea">Guinea</option>
+								<option value="Guinea-Bissau">Guinea-Bissau</option>
+								<option value="Guyana">Guyana</option>
+								<option value="Haiti">Haiti</option>
+								<option value="Heard and Mc Donald Islands">Heard- og McDonaldøerne</option>
+								<option value="Netherlands">Holland</option>
+								<option value="Honduras">Honduras</option>
+								<option value="Hong Kong">Hong Kong</option>
+								<option value="Belarus">Hviderusland</option>
+								<option value="Iceland">Island</option>
+								<option value="India">Indien</option>
+								<option value="Indonesia">Indonesien</option>
+								<option value="Iran">Iran</option>
+								<option value="Iraq">Irak</option>
+								<option value="Ireland">Irland</option>
+								<option value="Israel">Israel</option>
+								<option value="Italy">Italien</option>
+								<option value="Jamaica">Jamaica</option>
+								<option value="Japan">Japan</option>
+								<option value="Jersey  (Channel Islands)">Jersey  (Kanaløerne)</option>
+								<option value="Jordan">Jordan</option>
+								<option value="Kazakhstan">Kasakhstan</option>
+								<option value="Kenya">Kenya</option>
+								<option value="China">Kina</option>
+								<option value="Kiribati">Kiribati</option>
+								<option value="Kuwait">Kuwait</option>
+								<option value="Kyrgyzstan">Kirgisistan</option>
+								<option value="Lao People's Democratic Republic">Laos</option>
+								<option value="Latvia">Letland</option>
+								<option value="Lebanon">Libanon</option>
+								<option value="Lesotho">Lesotho</option>
+								<option value="Liberia">Liberia</option>
+								<option value="Libya">Libyen</option>
+								<option value="Liechtenstein">Liechtenstein</option>
+								<option value="Lithuania">Litaeun</option>
+								<option value="Luxembourg">Luxembourg</option>
+								<option value="Macau">Macao</option>
+								<option value="Macedonia">Makedonien</option>
+								<option value="Madagascar">Madagaskar</option>
+								<option value="Malawi">Malawi</option>
+								<option value="Malaysia">Malaysia</option>
+								<option value="Maldives">Maldiverne</option>
+								<option value="Mali">Mali</option>
+								<option value="Malta">Malta</option>
+								<option value="Marshall Islands">Marshalløerne</option>
+								<option value="Martinique">Martinique</option>
+								<option value="Mauritania">Mauritanien</option>
+								<option value="Mauritius">Mauritius</option>
+								<option value="Mayotte">Mayotte</option>
+								<option value="Mexico">Mexico</option>
+								<option value="Micronesia, Federated States of">Mikronesiens Forenede Stater</option>
+								<option value="Moldova, Republic of">Moldova</option>
+								<option value="Monaco">Monaco</option>
+								<option value="Mongolia">Mongoliet</option>
+								<option value="Montenegro">Montenegro</option>
+								<option value="Montserrat">Montserrat</option>
+								<option value="Morocco">Marokko</option>
+								<option value="Mozambique">Mozambique</option>
+								<option value="Namibia">Namibia</option>
+								<option value="Nauru">Nauru</option>
+								<option value="Nepal">Nepal</option>
+								<option value="Netherlands Antilles">Nederlandske Antiller</option>
+								<option value="New Zealand">New Zealand</option>
+								<option value="Nicaragua">Nicaragua</option>
+								<option value="Niger">Niger</option>
+								<option value="Nigeria">Nigeria</option>
+								<option value="Niue">Niue</option>
+								<option value="Norfolk Island">Norfolk Island</option>
+								<option value="North Korea">Nordkorea</option>
+								<option value="Northern Mariana Islands">Nordmarianerne</option>
+								<option value="Norway">Norge</option>
+								<option value="New Caledonia">Ny Kaledonien</option>
+								<option value="Oman">Oman</option>
+								<option value="Pakistan">Pakistan</option>
+								<option value="Palau">Palau</option>
+								<option value="Palestine">Palæstina</option>
+								<option value="Panama">Panama</option>
+								<option value="Papua New Guinea">Papua Ny Guinea</option>
+								<option value="Paraguay">Paraguay</option>
+								<option value="Peru">Peru</option>
+								<option value="Pitcairn">Pitcairn</option>
+								<option value="Poland">Polen</option>
+								<option value="Portugal">Portugal</option>
+								<option value="Puerto Rico">Puerto Rico</option>
+								<option value="Qatar">Qatar</option>
+								<option value="Republic of Kosovo">Kosovo</option>
+								<option value="Reunion">Réunion</option>
+								<option value="Romania">Rumænien</option>
+								<option value="Russia">Rusland</option>
+								<option value="Rwanda">Rwanda</option>
+								<option value="Saint Kitts and Nevis">Saint Kitts og Nevis</option>
+								<option value="Saint Lucia">Saint Lucia</option>
+								<option value="Saint Vincent and the Grenadines">Saint Vincent og Grenadinerne</option>
+								<option value="Samoa (Independent)">Samoa</option>
+								<option value="San Marino">San Marino</option>
+								<option value="Sao Tome and Principe">São Tomé og Príncipe</option>
+								<option value="Saudi Arabia">Saudi-Arabien</option>
+								<option value="Switzerland">Schweiz</option>
+								<option value="Senegal">Senegal</option>
+								<option value="Serbia">Serbien</option>
+								<option value="Seychelles">Seychellerne</option>
+								<option value="Sierra Leone">Sierra Leone</option>
+								<option value="Singapore">Singapore</option>
+								<option value="Sint Maarten">Sint Maarten</option>
+								<option value="Slovakia">Slovakiet</option>
+								<option value="Slovenia">Slovenien</option>
+								<option value="Solomon Islands">Salomonøerne</option>
+								<option value="Somalia">Somalia</option>
+								<option value="South Georgia and the South Sandwich Islands">South Georgia og South Sandwich Islands</option>
+								<option value="Spain">Spanien</option>
+								<option value="Sri Lanka">Sri Lanka</option>
+								<option value="St. Helena">St. Helena</option>
+								<option value="St. Pierre and Miquelon">Saint-Pierre og Miquelon</option>
+								<option value="United Kingdom">Storbritannien</option>
+								<option value="Sudan">Sudan</option>
+								<option value="Suriname">Surinam</option>
+								<option value="Svalbard and Jan Mayen Islands">Svalbard og Jan Mayen</option>
+								<option value="Sweden">Sverige</option>
+								<option value="Swaziland">Swaziland</option>
+								<option value="South Africa">Sydafrica</option>
+								<option value="South Korea">Sydkorea</option>
+								<option value="South Sudan">Sydsudan</option>
+								<option value="Syria">Syrien</option>
+								<option value="Taiwan">Taiwan</option>
+								<option value="Tajikistan">Tadsjikistan</option>
+								<option value="Tanzania">Tanzania</option>
+								<option value="Thailand">Thailand</option>
+								<option value="Czech Republic">Tjekkiet</option>
+								<option value="Togo">Togo</option>
+								<option value="Tokelau">Tokelau</option>
+								<option value="Tonga">Tonga</option>
+								<option value="Trinidad and Tobago">Trinidad og Tobago</option>
+								<option value="Tunisia">Tunisien</option>
+								<option value="Turkey">Tyrkiet</option>
+								<option value="Germany">Tyskland</option>
+								<option value="Turkmenistan">Turkmenistan</option>
+								<option value="Turks and Caicos Islands">Turks- og Caicosøerne</option>
+								<option value="Tuvalu">Tuvalu</option>
+								<option value="Uganda">Uganda</option>
+								<option value="Ukraine">Ukraine</option>
+								<option value="Hungary">Ungarn</option>
+								<option value="Uruguay">Uruguay</option>
+								<option value="USA Minor Outlying Islands">USA's ydre småøer</option>
+								<option value="Uzbekistan">Usbekistan</option>
+								<option value="Vanuatu">Vanuatu</option>
+								<option value="Vatican City State (Holy See)">Vatikanstaten</option>
+								<option value="Venezuela">Venezuela</option>
+								<option value="Vietnam">Vietnam</option>
+								<option value="Wallis and Futuna Islands">Wallis og Futuna</option>
+								<option value="Western Sahara">Vestsahara</option>
+								<option value="Yemen">Yemen</option>
+								<option value="Zaire">Zaire</option>
+								<option value="Zambia">Zambia</option>
+								<option value="Zimbabwe">Zimbabwe</option>
+								<option value="Equatorial Guinea">Ækvatorialguinea</option>
+								<option value="Austria">Østring</option>	
+								<option value="East Timor">Østtimor</option>
+								<option value="Aaland Islands">Åland</option>
+								
+									</select>
+										</div>
+									</div>
+								
+									<div class="gu2 col">
+										<div  id="newsletterSelect" class="inputBack">
+										<h5>Hold mig løbende underrettet om Carlsberg Byen via disse nyhedsbreve:</h5>
+											<div class="mc-field-group input-group">
+												<ul><li><input type="checkbox" value="1" name="group[6433][1]" id="mce-group[6433]-6433-0"><label for="mce-group[6433]-6433-0"><span></span>Generelle nyheder</label></li>
+													<li><input type="checkbox" value="2" name="group[6433][2]" id="mce-group[6433]-6433-1"><label for="mce-group[6433]-6433-1"><span></span>Boliger</label></li>
+													<li><input type="checkbox" value="4" name="group[6433][4]" id="mce-group[6433]-6433-2"><label for="mce-group[6433]-6433-2"><span></span>Erhverv</label></li>
+													<li><input type="checkbox" value="8" name="group[6433][8]" id="mce-group[6433]-6433-3"><label for="mce-group[6433]-6433-3"><span></span>Events</label></li>
+													<li><input type="checkbox" value="16" name="group[6433][16]" id="mce-group[6433]-6433-4"><label for="mce-group[6433]-6433-4"><span></span>Naboorientering</label></li>
+													
+												</ul>	
+											</div>
+										</div>
+									</div>
+								</div> <!-- end row -->
+								
+								<div class="clearfix spacing"></div>
+								
+								<div class="row gu6">
+									<div class="col gu3">
+										
+										<div class="mc-field-group">
+											<h5>Hvornår kunne du tænke dig at flytte ind?</h5>
+											<select name="MMERGE6" class="" id="mce-MMERGE6">
+											
+											<option value="1 år">Om 1 år</option>
+										<option value="2 år">Om 2 år</option>
+										<option value="3 år">Om 3 år</option>
+										<option value="4 år">Om 4 år</option>
+										<option value="Over 4 år">Om over 4 år</option>
+										
+											</select>
+										</div>
+									</div>
+								
+									<div class="col gu3">
+										<div class="mc-field-group">
+											<h5>Hvilket prisniveau kunne du være interesseret i? </h5>
+											<select name="MMERGE7" class="" id="mce-MMERGE7">
+											
+											<option value="Under 2.500.000">Under 2.500.000</option>
+											<option value="2.500.000 - 3.000.000">2.500.000 - 3.000.000</option>
+											<option value="3.000.000 - 4.000.000">3.000.000 - 4.000.000</option>
+											<option value="4.000.000 - 5.000.000">4.000.000 - 5.000.000</option>
+											<option value="5.000.000 - 6.000.000">5.000.000 - 6.000.000</option>
+											<option value="Over 6.000.000">Over 6.000.000</option>
+										
+											</select>
+										</div>
+									</div>
+								</div><!-- end row -->
+								<div class="clearfix spacing"></div>
+								
+									
+									<div class="row gu6">
+										<div class="col gu3">
+										
+											<div class="mc-field-group">
+												<h5>Hvor mange værelser? </h5>
+												<select name="ROOMS" class="" id="mce-ROOMS">
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+												</select>
+											</div>
+										</div>	
+										<div class="col gu3">			
+											<div class="mc-field-group">
+												<h5>Hvor stor en bolig? </h5>
+												<select name="AREA" class="" id="mce-AREA">
+													<option value="50-75 m²">50-75 m²</option>
+													<option value="75-100 m²">75-100 m²</option>
+													<option value="100-125 m²">100-125 m²</option>
+													<option value="125-150 m²">125-150 m²</option>
+													<option value="Over 150 m²">Over 150 m²</option>
+												</select>
+											</div>
+										</div>
+									</div><!-- end row -->
+									<div class="clearfix spacing"></div>
+								
+									
+									<div class="row gu6">					
+										<div class="col gu3">			
+										<div class="mc-field-group input-group">
+											<div class="inputBack">
+											<h5>Antal medlemmer i husstanden? </h5>
+											<ul>
+												<li><input type="radio" value="1" name="FAMILY" id="mce-FAMILY-0"><label for="mce-FAMILY-0"><span></span>1</label></li>
+												<li><input type="radio" value="2" name="FAMILY" id="mce-FAMILY-1"><label for="mce-FAMILY-1"><span></span>2</label></li>
+												<li><input type="radio" value="3" name="FAMILY" id="mce-FAMILY-2"><label for="mce-FAMILY-2"><span></span>3</label></li>
+												<li><input type="radio" value="4" name="FAMILY" id="mce-FAMILY-3"><label for="mce-FAMILY-3"><span></span>4</label></li>
+												<li><input type="radio" value="Over 4" name="FAMILY" id="mce-FAMILY-4"><label for="mce-FAMILY-4"><span></span>Over 4</label></li>
+											</ul>
+											</div>
+										</div>
+										</div>
+										<div class="col gu3">
+										<div class="mc-field-group input-group">
+											<div class="inputBack">
+											<h5>Hvor har du hørt om Carlsberg Byen? </h5>
+											<ul>
+												<li><input type="radio" value="Dialogmøde/åbent hus" name="HEARDABOUT" id="mce-HEARDABOUT-0"><label for="mce-HEARDABOUT-0"><span></span>Dialogmøde/åbent hus</label></li>
+												<li><input type="radio" value="Byggepladssskilt" name="HEARDABOUT" id="mce-HEARDABOUT-1"><label for="mce-HEARDABOUT-1"><span></span>Byggepladssskilt</label></li>
+												<li><input type="radio" value="Lokalavis, dagblad eller lignende" name="HEARDABOUT" id="mce-HEARDABOUT-2"><label for="mce-HEARDABOUT-2"><span></span>Lokalavis, dagblad eller lignende</label></li>
+												<li><input type="radio" value="Familie og venner" name="HEARDABOUT" id="mce-HEARDABOUT-3"><label for="mce-HEARDABOUT-3"><span></span>Familie og venner</label></li>
+												<li><input type="radio" value="Andet" name="HEARDABOUT" id="mce-HEARDABOUT-4"><label for="mce-HEARDABOUT-4"><span></span>Andet</label></li>
+											</ul>
+											</div>
+										</div>
+										</div>			
+									</div><!-- end row -->
+								<div class="clearfix spacing"></div>
+									
+									
+									
+									
+									
+								
+								<div class="row gu6">
+									<div class="col gu6">
+								
+																
+								<div class="opfattelse">
+								<h5>Hvad er din opfattelse af Carlsberg Byen? </h5>
+								<div class="mc-field-group input-group">
+									<strong>Beliggenhed </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE8" id="mce-MMERGE8-0"><label for="mce-MMERGE8-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE8" id="mce-MMERGE8-1"><label for="mce-MMERGE8-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE8" id="mce-MMERGE8-2"><label for="mce-MMERGE8-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE8" id="mce-MMERGE8-3"><label for="mce-MMERGE8-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE8" id="mce-MMERGE8-4"><label for="mce-MMERGE8-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group eq">
+									<strong>Plan for området </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE9" id="mce-MMERGE9-0"><label for="mce-MMERGE9-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE9" id="mce-MMERGE9-1"><label for="mce-MMERGE9-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE9" id="mce-MMERGE9-2"><label for="mce-MMERGE9-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE9" id="mce-MMERGE9-3"><label for="mce-MMERGE9-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE9" id="mce-MMERGE9-4"><label for="mce-MMERGE9-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group">
+									<strong>Arkitektur </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE10" id="mce-MMERGE10-0"><label for="mce-MMERGE10-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE10" id="mce-MMERGE10-1"><label for="mce-MMERGE10-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE10" id="mce-MMERGE10-2"><label for="mce-MMERGE10-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE10" id="mce-MMERGE10-3"><label for="mce-MMERGE10-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE10" id="mce-MMERGE10-4"><label for="mce-MMERGE10-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group eq">
+									<strong>Trafik </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE11" id="mce-MMERGE11-0"><label for="mce-MMERGE11-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE11" id="mce-MMERGE11-1"><label for="mce-MMERGE11-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE11" id="mce-MMERGE11-2"><label for="mce-MMERGE11-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE11" id="mce-MMERGE11-3"><label for="mce-MMERGE11-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE11" id="mce-MMERGE11-4"><label for="mce-MMERGE11-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group">
+									<strong>Indkøb </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE12" id="mce-MMERGE12-0"><label for="mce-MMERGE12-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE12" id="mce-MMERGE12-1"><label for="mce-MMERGE12-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE12" id="mce-MMERGE12-2"><label for="mce-MMERGE12-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE12" id="mce-MMERGE12-3"><label for="mce-MMERGE12-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE12" id="mce-MMERGE12-4"><label for="mce-MMERGE12-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group eq">
+									<strong>Parkering </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE13" id="mce-MMERGE13-0"><label for="mce-MMERGE13-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE13" id="mce-MMERGE13-1"><label for="mce-MMERGE13-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE13" id="mce-MMERGE13-2"><label for="mce-MMERGE13-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE13" id="mce-MMERGE13-3"><label for="mce-MMERGE13-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE13" id="mce-MMERGE13-4"><label for="mce-MMERGE13-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group">
+									<strong>Kultur </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE14" id="mce-MMERGE14-0"><label for="mce-MMERGE14-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE14" id="mce-MMERGE14-1"><label for="mce-MMERGE14-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE14" id="mce-MMERGE14-2"><label for="mce-MMERGE14-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE14" id="mce-MMERGE14-3"><label for="mce-MMERGE14-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE14" id="mce-MMERGE14-4"><label for="mce-MMERGE14-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group eq">
+									<strong>Fritidsmuligheder </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE15" id="mce-MMERGE15-0"><label for="mce-MMERGE15-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE15" id="mce-MMERGE15-1"><label for="mce-MMERGE15-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE15" id="mce-MMERGE15-2"><label for="mce-MMERGE15-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE15" id="mce-MMERGE15-3"><label for="mce-MMERGE15-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE15" id="mce-MMERGE15-4"><label for="mce-MMERGE15-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								<div class="mc-field-group input-group">
+									<strong>Børneinstitutioner </strong>
+									<ul><li><input type="radio" value="Ikke attraktiv" name="MMERGE16" id="mce-MMERGE16-0"><label for="mce-MMERGE16-0"><span></span>Ikke attraktiv</label></li>
+								<li><input type="radio" value="Mindre attraktiv" name="MMERGE16" id="mce-MMERGE16-1"><label for="mce-MMERGE16-1"><span></span>Mindre attraktiv</label></li>
+								<li><input type="radio" value="Hverken eller" name="MMERGE16" id="mce-MMERGE16-2"><label for="mce-MMERGE16-2"><span></span>Hverken eller</label></li>
+								<li><input type="radio" value="Attraktiv" name="MMERGE16" id="mce-MMERGE16-3"><label for="mce-MMERGE16-3"><span></span>Attraktiv</label></li>
+								<li><input type="radio" value="Meget attraktiv" name="MMERGE16" id="mce-MMERGE16-4"><label for="mce-MMERGE16-4"><span></span>Meget attraktiv</label></li>
+								</ul>
+								</div>
+								</div>
+									</div>
+								</div> <!-- end row -->
+																
+								
+								
+								
+								
+								
+									<div id="mce-responses" class="clear">
+										<div class="response" id="mce-error-response" style="display:none"></div>
+										<div class="response" id="mce-success-response" style="display:none"></div>
+									</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+									<div style="position: absolute; left: -5000px;"><input type="text" name="b_63c8b1e1104d039d4f0ddbed0_179340c89a" value=""></div>
+									
+									<div class="clear">
+									<div class="clearfix spacing45"></div>
+									<div class="submitback">
+									<input type="submit" value="Tilmeld" name="subscribe" id="mc-embedded-subscribe" class="button">
+									</div>
+									</div>
+								</form>
+								</div>
+								<script type="text/javascript">
+								
+								
+									
+								
+								var fnames = new Array();var ftypes = new Array();fnames[1]='FNAME';ftypes[1]='text';fnames[0]='EMAIL';ftypes[0]='email';fnames[17]='ADDRESS';ftypes[17]='text';fnames[2]='ZIP';ftypes[2]='text';fnames[3]='CITY';ftypes[3]='text';fnames[4]='COUNTRY';ftypes[4]='dropdown';fnames[5]='MMERGE5';ftypes[5]='text';fnames[6]='MMERGE6';ftypes[6]='dropdown';fnames[7]='MMERGE7';ftypes[7]='dropdown';fnames[8]='MMERGE8';ftypes[8]='radio';fnames[9]='MMERGE9';ftypes[9]='radio';fnames[10]='MMERGE10';ftypes[10]='radio';fnames[11]='MMERGE11';ftypes[11]='radio';fnames[12]='MMERGE12';ftypes[12]='radio';fnames[13]='MMERGE13';ftypes[13]='radio';fnames[14]='MMERGE14';ftypes[14]='radio';fnames[15]='MMERGE15';ftypes[15]='radio';fnames[16]='MMERGE16';ftypes[16]='radio';fnames[18]='ROOMS';ftypes[18]='dropdown';fnames[19]='AREA';ftypes[19]='dropdown';fnames[20]='FAMILY';ftypes[20]='radio';fnames[21]='HEARDABOUT';ftypes[21]='radio';
+								try {
+									var jqueryLoaded=jQuery;
+									jqueryLoaded=true;
+								} catch(err) {
+									var jqueryLoaded=false;
+								}
+								var head= document.getElementsByTagName('head')[0];
+								if (!jqueryLoaded) {
+									var script = document.createElement('script');
+									script.type = 'text/javascript';
+									script.src = '//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js';
+									head.appendChild(script);
+									if (script.readyState && script.onload!==null){
+										script.onreadystatechange= function () {
+											  if (this.readyState == 'complete') mce_preload_check();
+										}    
+									}
+								}
+								
+								var err_style = '';
+								try{
+									err_style = mc_custom_error_style;
+								} catch(e){
+									err_style = '#mc_embed_signup_interesse input.mce_inline_error{border-color:#6B0505;} #mc_embed_signup_interesse div.mce_inline_error{margin: 0 0 1em 0; padding: 5px 10px; background-color:#6B0505; font-weight: bold; z-index: 1; color:#fff;}';
+								}
+								var head= document.getElementsByTagName('head')[0];
+								var style= document.createElement('style');
+								style.type= 'text/css';
+								if (style.styleSheet) {
+								  style.styleSheet.cssText = err_style;
+								} else {
+								  style.appendChild(document.createTextNode(err_style));
+								}
+								head.appendChild(style);
+								setTimeout('mce_preload_check();', 250);
+								
+								var mce_preload_checks = 0;
+								function mce_preload_check(){
+									if (mce_preload_checks>40) return;
+									mce_preload_checks++;
+									try {
+										var jqueryLoaded=jQuery;
+									} catch(err) {
+										setTimeout('mce_preload_check();', 250);
+										return;
+									}
+									var script = document.createElement('script');
+									script.type = 'text/javascript';
+									script.src = 'http://downloads.mailchimp.com/js/jquery.form-n-validate.js';
+									head.appendChild(script);
+									try {
+										var validatorLoaded=jQuery("#fake-form").validate({});
+									} catch(err) {
+										setTimeout('mce_preload_check();', 250);
+										return;
+									}
+									mce_init_form();
+								}
+								function mce_init_form(){
+									jQuery(document).ready( function($) {
+									  var options = { 
+									  errorClass: 'mce_inline_error', 
+									  errorElement: 'div', 
+									  onkeyup: function(){}, 
+									  onfocusout:function(){}, 
+									  onblur:function(){}, 
+									  success: function() {
+									  	$('#mc-embedded-subscribe').val('');
+									  	$('#mc-embedded-subscribe').css('background','#ffc65d url(/img/mailchimp-loader.gif) no-repeat center'); 
+									  }};
+									  var mce_validator = $("#mc-embedded-subscribe-form").validate(options);
+									  $("#mc-embedded-subscribe-form").unbind('submit');//remove the validator so we can get into beforeSubmit on the ajaxform, which then calls the validator
+									  options = { 
+									  		url: 'http://carlsbergbyen.us3.list-manage.com/subscribe/post-json?u=63c8b1e1104d039d4f0ddbed0&id=179340c89a&c=?',
+									  		type: 'GET', 
+									  		dataType: 'json', 
+									  		contentType: "application/json; charset=utf-8",
+											beforeSubmit: function(){
+												$('#mce_tmp_error_msg').remove();
+												$('.datefield','#mc_embed_signup_interesse').each(
+													function(){
+														var txt = 'filled';
+														var fields = new Array();
+														var i = 0;
+														$(':text', this).each(
+															function(){
+																fields[i] = this;
+																i++;
+															});
+														$(':hidden', this).each(
+															function(){
+																var bday = false;
+																if (fields.length == 2){
+																	bday = true;
+																	fields[2] = {'value':1970};//trick birthdays into having years
+																}
+																if ( fields[0].value=='MM' && fields[1].value=='DD' && (fields[2].value=='YYYY' || (bday && fields[2].value==1970) ) ){
+																	this.value = '';
+																} else if ( fields[0].value=='' && fields[1].value=='' && (fields[2].value=='' || (bday && fields[2].value==1970) ) ){
+																	this.value = '';
+																} else {
+																	if (/\[day\]/.test(fields[0].name)){
+																		this.value = fields[1].value+'/'+fields[0].value+'/'+fields[2].value;									        
+																	} else {
+																		this.value = fields[0].value+'/'+fields[1].value+'/'+fields[2].value;
+																	}
+																}
+															});
+													});
+												$('.phonefield-us','#mc_embed_signup_interesse').each(
+													function(){
+														var fields = new Array();
+														var i = 0;
+														$(':text', this).each(
+															function(){
+																fields[i] = this;
+																i++;
+															});
+														$(':hidden', this).each(
+															function(){
+																if ( fields[0].value.length != 3 || fields[1].value.length!=3 || fields[2].value.length!=4 ){
+																	this.value = '';
+																} else {
+																	this.value = 'filled';
+																}
+															});
+													});
+													
+													
+													
+													
+												return mce_validator.form();
+											}, 
+											success: mce_success_cb,
+											
+										};
+									  $('#mc-embedded-subscribe-form').ajaxForm(options);
+									  /*
+								 * Translated default messages for the jQuery validation plugin.
+								 * Locale: DA
+								 */
+								jQuery.extend(jQuery.validator.messages, {
+									required: "Dette felt er påkrævet.",
+									maxlength: jQuery.validator.format("Indtast højst {0} tegn."),
+									minlength: jQuery.validator.format("Indtast mindst {0} tegn."),
+									rangelength: jQuery.validator.format("Indtast mindst {0} og højst {1} tegn."),
+									email: "Indtast en gyldig email-adresse.",
+									url: "Indtast en gyldig URL.",
+									date: "Indtast en gyldig dato.",
+									number: "Indtast et tal.",
+									digits: "Indtast kun cifre.",
+									equalTo: "Indtast den samme værdi igen.",
+									range: jQuery.validator.format("Angiv en værdi mellem {0} og {1}."),
+									max: jQuery.validator.format("Angiv en værdi der højst er {0}."),
+									min: jQuery.validator.format("Angiv en værdi der mindst er {0}."),
+									creditcard: "Indtast et gyldigt kreditkortnummer."
+								});
+								
+									  
+									});
+								}
+								function mce_success_cb(resp){
+									$('#mc-embedded-subscribe').css('background','#ffc65d url(/img/done.png) no-repeat center'); 
+									$('#mce-success-response').hide();
+									$('#mce-error-response, .mce_inline_error').hide();
+									if (resp.result=="success"){
+										$('#mce-'+resp.result+'-response').show();
+										        $('#mce-'+resp.result+'-response').html('<h1>Tak for din tilmelding</h1><p>Du har modtaget en e-mail fra Carlsberg Byen hvor vi beder dig bekr&aelig;fte din e-mail adresse.</p><a href="#" class="scrolltop" onclick=" $(\'html, body\').animate({ scrollTop: 0 }, \'slow\'); return false;">Til toppen</a>');
+
+										$('#mc-embedded-subscribe-form').each(function(){
+											this.reset();
+										});
+									} else {
+										var index = -1;
+										var msg;
+										try {
+											var parts = resp.msg.split(' - ',2);
+											if (parts[1]==undefined){
+												msg = resp.msg;
+											} else {
+												i = parseInt(parts[0]);
+												if (i.toString() == parts[0]){
+													index = parts[0];
+													msg = parts[1];
+												} else {
+													index = -1;
+													msg = resp.msg;
+												}
+											}
+										} catch(e){
+											index = -1;
+											msg = resp.msg;
+										}
+										try{
+											if (index== -1){
+												$('#mce-'+resp.result+'-response').show();
+												$('#mce-'+resp.result+'-response').html(msg);            
+											} else {
+												err_id = 'mce_tmp_error_msg';
+												html = '<div id="'+err_id+'" style="'+err_style+'"> '+msg+'</div>';
+												
+												var input_id = '#mc_embed_signup_interesse';
+												var f = $(input_id);
+												if (ftypes[index]=='address'){
+													input_id = '#mce-'+fnames[index]+'-addr1';
+													f = $(input_id).parent().parent().get(0);
+												} else if (ftypes[index]=='date'){
+													input_id = '#mce-'+fnames[index]+'-month';
+													f = $(input_id).parent().parent().get(0);
+												} else {
+													input_id = '#mce-'+fnames[index];
+													f = $().parent(input_id).get(0);
+												}
+												if (f){
+													$(f).append(html);
+													$(input_id).focus();
+												} else {
+													$('#mce-'+resp.result+'-response').show();
+													$('#mce-'+resp.result+'-response').html(msg);
+												}
+											}
+										} catch(e){
+											$('#mce-'+resp.result+'-response').show();
+											$('#mce-'+resp.result+'-response').html(msg);
+										}
+									}
+									   $('#mce-responses').delay(100).slideDown();
+
+								}
+								
+								$(function() {
+
+								    $('label.placeholder').innerlabel({placeholder: true});
+								    
+								});
+								
+								</script>
+								<!--End mc_embed_signup_interesse-->
+							</div>
+						</div>
+						
+						<div class="col gu2">
+							
+							
+							<div class="clearfix spacing"></div>
+								
+							
+								
+							
+						</div>
+		        	</div>
+		        </div>
+		</div>
+    </article>
+</div><!-- end #container -->

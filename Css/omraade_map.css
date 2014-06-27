@@ -1,0 +1,99 @@
+#mapwrapper{
+	position: relative;
+}
+
+#whitebox {
+	position: absolute;
+	top: 0;
+	left: 100px;
+	width: 286px;
+	transition: all 200ms;
+	opacity: 0;
+	display: none;
+	z-index: 100;
+	padding: 0 20px;
+}
+
+#whitebox .closer{
+	right:10px;
+	top: 10px;
+	background: url(../img/closer-orange.png) no-repeat center bottom;
+	position: absolute;
+	cursor: pointer;
+}
+
+#whitebox .closer:hover{
+	background: url(../img/closer-orange.png) no-repeat center top;
+}
+
+#whitebox .inner{
+	margin-top: 30px;
+	position: absolute;
+	width: 246px;
+	background: white;
+	padding: 10px 30px 30px;
+	border-radius: 2px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.28);
+}
+/* position of whitebox: */
+#whitebox.top .inner{bottom:0;}
+#whitebox.bottom .inner{top:0;}
+#whitebox.right{margin-left: -380px;}
+#whitebox.left{margin-left: 40px;}
+#whitebox.center{margin-left: -180px;}
+#whitebox.center.top{margin-top: -40px;}
+#whitebox.center.bottom{margin-top: 40px;}
+#whitebox.right.top, #whitebox.left.top{margin-top: 40px;}
+#whitebox.right.bottom, #whitebox.left.bottom{margin-top: -80px;}
+
+/* position of whitebox tut: */
+#whitebox.top.center .tut{bottom:-8px; left: 50%}
+#whitebox.top.right .tut{right:-8px; bottom: 33px;}
+#whitebox.top.left .tut{left:12px; bottom: 33px;}
+#whitebox.bottom.right .tut{right:-8px; top: 73px;}
+#whitebox.bottom.center .tut{top: 22px;left: 50%;}
+#whitebox.bottom.left .tut{left:12px; top: 73px;}
+
+
+
+#whitebox h2{
+	margin: 8px 0;
+	font-size: 16px;
+}
+
+#whitebox .desc{
+	font-size: 12px;
+	font-family: 'Ministry-Light';
+	margin: 20px 0 10px;
+}
+
+#whitebox .inner a.readmore{
+	font-size: 12px;
+	font-family: 'Ministry-Light';
+	color: #d0d0d0;
+	display: block;
+	border-radius: 5px;
+	text-align: center;
+	padding: 12px 0;
+	background: #b01d34;
+	width: 246px;
+	text-decoration: none;
+}
+
+#whitebox .inner a.readmore:hover{
+	color: black;
+	background: #f6840d;
+}
+
+#whitebox .meta{
+	color: #978c86;
+}
+
+#whitebox .tut{
+	background-image: url(/img/square-tut-small.png);
+	height: 16px;
+	width: 16px;
+	position: absolute;
+	display: block;
+}
+

@@ -1,0 +1,350 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@using System.Web.Script.Serialization;
+@using System.Text.RegularExpressions
+@using System.Globalization;
+
+@{
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	var startNode = Library.NodeById(2277);
+	var events = new List<dynamic>();
+	var feed = new List<dynamic>();
+	var date_from = (HttpContext.Current.Request.QueryString["date_from"] != null) ? HttpContext.Current.Request.QueryString["date_from"] : DateTime.Now.Date.ToString("yyyyMMdd");
+	var date_to = (HttpContext.Current.Request.QueryString["date_to"] != null) ? HttpContext.Current.Request.QueryString["date_to"] : DateTime.Now.Date.ToString("yyyyMMdd");
+	bool orderDesc = (HttpContext.Current.Request.QueryString["sort_descending"] == null || HttpContext.Current.Request.QueryString["sort_descending"] == "0") ? false : true;
+	var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+
+	var dateFromSubstr = date_from.IndexOf(" GMT");
+	var dateToSubstr = date_to.IndexOf(" GMT");
+	
+	string dateFromString = (dateFromSubstr >0 ) ? date_from.Substring(4, dateFromSubstr-4) : date_from;
+	string dateToString = (dateToSubstr >0 ) ? date_to.Substring(4, dateToSubstr-4) : date_to;
+	
+	var dateFromFormat = (dateFromSubstr >0 ) ? "MMM' 'dd' 'yyyy' 'HH':'mm':'ss" : "yyyyMMdd";
+	var dateToFormat = (dateToSubstr >0 ) ? "MMM' 'dd' 'yyyy' 'HH':'mm':'ss" : "yyyyMMdd";
+	
+	
+    DateTime startDate = DateTime.ParseExact(dateFromString, dateFromFormat, CultureInfo.InvariantCulture);
+	DateTime endDate = DateTime.ParseExact(dateToString, dateToFormat, CultureInfo.InvariantCulture);
+		
+     
+	
+	string[] dayNames = {"Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"};
+	var curWeekDay = DateTime.Now.Date.ToString("dddd");
+	var selectedWeekDay = DateTime.ParseExact(dateFromString, dateFromFormat, CultureInfo.InvariantCulture).ToString("dddd");
+	var totalDays = (endDate.Date - startDate.Date).TotalDays;
+	
+ 
+	for(var thisDay = 0; thisDay <= totalDays; thisDay++){
+		
+		DateTime loopCurrentDay = startDate.AddDays(thisDay);
+		var loopCurrentWeekDay = loopCurrentDay.ToString("dddd");
+		
+		foreach (var page in startNode.Children.Where("Visible").OrderBy("startEndDate"))
+		{
+			
+			
+			
+			string openHours = page.GetPropertyValue("openhours").Replace("\"", "");
+			List<string> openHoursList = openHours.Split(new char[]{'[',']',','},StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+				
+			var dateRange = page.GetPropertyValue<Diplo.DateRangePicker.DateRange>("startEndDate");
+			
+			List<string> dateArray = new List<string>(dateRange.Split(','));
+	
+			var eventStartDate = DateTime.ParseExact(dateArray[0], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+			var eventEndDate = DateTime.ParseExact(dateArray[1], dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+			var eventWeekDaysArray = new List<dynamic>();
+			
+			int iStart = 0;
+			int dayIndex = 0;
+			@* init open/closestimes*@
+			string open = "";
+			string close = "";
+			
+			var desc = Library.StripHtml(page.bodyText);
+			string descString = desc.ToString();
+			var htmlDesc = WebUtility.HtmlDecode(descString);
+			
+			
+			
+			foreach(var day in openHoursList){
+				
+				int secNum = iStart-1;
+				bool second = secNum % 3 == 0 ? true : false;
+				int thirdNum = iStart-2;
+				bool third = thirdNum % 3 == 0 ? true : false;
+				
+					
+				if(second && !String.IsNullOrEmpty(day)){
+					open = day;
+				}
+				
+				if(third && !String.IsNullOrEmpty(day) && day != "null"){
+					close = day;
+					
+					var times = new
+					{					
+						open = open,
+						close = close	
+					};
+						
+						
+					var dayname = dayNames[dayIndex].ToLower();
+					
+					eventWeekDaysArray.Add(new{
+						day = dayname,
+						time = times
+					});
+		
+				}
+				
+				
+				if(third){
+		
+					dayIndex++;
+				}
+				
+				iStart ++;
+				
+				
+			}
+			
+			
+			int isStarted = DateTime.Compare(loopCurrentDay, eventStartDate);
+			int isEnded = DateTime.Compare(loopCurrentDay, eventEndDate);
+			
+			
+			if((isStarted >= 1) && (isEnded < 1)){
+				
+										
+				foreach (var myItem in eventWeekDaysArray.Select((value,i) => new {i, value}))
+				{
+					
+
+					
+					if (eventWeekDaysArray[myItem.i].day.Contains(loopCurrentWeekDay)){
+						
+						
+
+						var openHour = eventWeekDaysArray[myItem.i].time.open;
+						var closeHour = eventWeekDaysArray[myItem.i].time.close;
+						
+					
+						
+						@* Location: *@				
+						var venue = Library.NodeById(page.GetPropertyValue("venue"));
+						var location = new
+						{
+							id = venue.Id.ToString(), 
+							name = venue.Name
+						};	
+						
+						@* Management: *@
+						
+						var manager = Library.NodeById(page.GetPropertyValue("manager"));
+						var management = new
+						{
+							id = manager.Id.ToString(),
+							name = manager.Name	
+						};
+						
+						
+						@* Links: *@
+						var links = new List<dynamic>();
+						
+						links.Add(new
+						{
+							type = "tickets",
+							linktext = "billetter",
+							url = page.GetProperty("ticket").Value								  
+						});
+								  
+						links.Add(new
+						{
+							type = "generic",
+							linktext = page.GetProperty("outLink").Value,
+							url = page.GetProperty("outLink").Value								  
+						});
+						
+						links.Add(new
+						{
+							type = "generic",
+							linktext = "Facebook",
+							url = page.GetProperty("facebookUrl").Value							  
+						});
+						
+						@* Images: *@
+						var thumbUrl = "";
+						if (page.HasValue("images"))
+						{
+							
+							var imagesList = page.GetPropertyValue<string>("images");
+							List<string> imagesArray = new List<string>(imagesList.Split(','));
+							thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+							
+						}
+						
+						var images = new List<dynamic>();
+						
+						images.Add(new
+						{
+							type = "app_event",
+							url = "/imagegen.ashx?image="+thumbUrl+"&amp;width=600"
+						});
+						
+						@* create object *@
+						events.Add(new
+						{
+							id = page.Id.ToString(),
+							category = umbraco.library.GetPreValueAsString(Convert.ToInt32(page.GetProperty("genrer2").Value)),
+							location = location,
+							management = management,
+							is_featured = (page.GetProperty("isFeatured").Value != "") ? page.GetProperty("isFeatured").Value : "0",
+							title = page.Name,
+							teaser = page.GetProperty("description").Value,
+							description = Html.Raw(htmlDesc).ToString(),
+							date_shown = loopCurrentDay.ToString("yyyyMMdd"),
+							opening_time = openHour,
+							fixed_opening_time = "0",
+							closing_time = closeHour,
+							facebook_url = page.GetProperty("facebookUrl").Value,
+							web_url = "http://"+HttpContext.Current.Request.Url.Host+page.NiceUrl(),
+							links = links,
+							images = images
+							
+							
+						});
+					
+					}@* end weekday match *@
+				}@* end foreach day *@
+				
+				
+				
+				if (page.repeatable && eventWeekDaysArray.Count() == 0){
+						
+						
+
+						var openHour = "00:00";
+						var closeHour = "24:00";
+						
+					
+						
+						@* Location: *@				
+						var venue = Library.NodeById(page.GetPropertyValue("venue"));
+						var location = new
+						{
+							id = venue.Id.ToString(), 
+							name = venue.Name
+						};	
+						
+						@* Management: *@
+						
+						var manager = Library.NodeById(page.GetPropertyValue("manager"));
+						var management = new
+						{
+							id = manager.Id.ToString(),
+							name = manager.Name	
+						};
+						
+						
+						@* Links: *@
+						var links = new List<dynamic>();
+						
+						links.Add(new
+						{
+							type = "tickets",
+							linktext = "billetter",
+							url = page.GetProperty("ticket").Value								  
+						});
+								  
+						links.Add(new
+						{
+							type = "generic",
+							linktext = page.GetProperty("outLink").Value,
+							url = page.GetProperty("outLink").Value								  
+						});
+						
+						links.Add(new
+						{
+							type = "generic",
+							linktext = "Facebook",
+							url = page.GetProperty("facebookUrl").Value							  
+						});
+						
+						@* Images: *@
+						var thumbUrl = "";
+						if (page.HasValue("images"))
+						{
+							
+							var imagesList = page.GetPropertyValue<string>("images");
+							List<string> imagesArray = new List<string>(imagesList.Split(','));
+							thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+							
+						}
+						
+						var images = new List<dynamic>();
+						
+						images.Add(new
+						{
+							type = "app_event",
+							url = "/imagegen.ashx?image="+thumbUrl+"&width=600"
+						});
+						
+						@* create object *@
+						events.Add(new
+						{
+							id = page.Id.ToString(),
+							category = umbraco.library.GetPreValueAsString(Convert.ToInt32(page.GetProperty("genrer2").Value)),
+							location = location,
+							management = management,
+							is_featured = (page.GetProperty("isFeatured").Value != "") ? page.GetProperty("isFeatured").Value : "0",
+							title = page.Name,
+							teaser = page.GetProperty("description").Value,
+							description = Html.Raw(htmlDesc).ToString(),
+							date_shown = loopCurrentDay.ToString("yyyyMMdd"),
+							opening_time = openHour,
+							fixed_opening_time = "0",
+							closing_time = closeHour,
+							facebook_url = page.GetProperty("facebookUrl").Value,
+							web_url = "http://"+HttpContext.Current.Request.Url.Host+page.NiceUrl(),
+							links = links,
+							images = images
+							
+							
+						});
+					
+					}@* end repeatable and no dates match *@
+				
+				
+				
+				
+			}@* end daterange if *@
+		} @* end foreach page loop *@	
+	} @* end total days loop *@
+	
+	var newEvents = new List<dynamic>();
+	foreach (var ev in events.OrderBy(item => item.opening_time)){
+		newEvents.Add(ev);
+	}
+	
+	if (orderDesc){
+		newEvents.Reverse();
+	}
+	
+	
+	
+	feed.Add(new
+	{
+		updated = DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+		events = newEvents,
+	});
+	
+	
+	
+	var output = serializer.Serialize(feed).ToString().Substring(1);
+	output = output.Substring(0, output.Length-1);
+	
+}
+
+@Html.Raw(output)

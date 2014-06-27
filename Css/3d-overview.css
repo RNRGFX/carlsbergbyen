@@ -1,0 +1,541 @@
+#wrapper_3d > .inner,
+.mapwrapper,
+.mapwrapper img,
+#figures,
+svg{
+	max-width: 1440px;
+	max-height: 937px;
+	width: 100%;
+	height: 100%
+}
+
+
+#wrapper_3d{
+	position: relative;
+	width: 100%;
+	max-height: 937px;
+	background: #232a32;
+	overflow: hidden;
+}
+
+#wrapper_3d .interactive{
+	display: none;
+}
+
+
+#wrapper_3d .inner{
+	position: relative;
+	margin: 0 auto;
+}
+
+#imgwrapper2D{
+	display: none;
+}
+
+#container.byggefelt #actions{
+	float: left;
+	clear: both;
+	display: block;
+	margin-bottom: 30px;
+}
+
+#container .smallmapwrapper{
+	position: relative;
+	cursor: pointer;
+	display: block;
+	overflow: hidden;
+	padding-bottom: 20px;
+	background: #222;
+}
+
+#container .smallmapwrapper img{
+	max-width: 100%
+}
+
+#container .smallmapwrapper #mark{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: -1px;
+}
+
+#container .smallmapwrapper #mark path{
+	fill-opacity: 0.8;
+	cursor: inherit;
+}
+
+#container .smallmapwrapper:hover .mapback,
+#container .smallmapwrapper:hover .arrow{
+	opacity: 0.8;
+}
+
+
+#container .smallmapwrapper .arrow{
+	text-decoration: none;
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 35%;
+	width: 42px;
+	height: 42px;
+	margin-left: -21px;
+	background: url(../img/read-less.png) no-repeat;
+	transition: all 200ms;
+	z-index: 10;
+	opacity: 0;
+}
+
+#container .mapback{
+	position: absolute;
+	bottom: 0;
+	background: white;
+	opacity: 0.9;
+	text-align: center;
+	padding: 15px 0;
+	color: black;
+	font-family: 'Ministry-Light';
+	font-size: 11px;
+	text-transform: uppercase;
+	width: 101%;	
+	transition:opacity 200ms;
+}
+
+#container.byggefelt .col.gu1{
+	height:270px;
+}
+
+#container.byggefelt .imgwrapper{
+	overflow: hidden;
+	margin-bottom: 14px;
+	height: 82px;
+}
+
+
+#container.byggefelt #whitebox .imgwrapper{
+	overflow: hidden;
+	height: auto;
+	max-height: 175px;
+}
+
+
+#container.byggefelt .col.gu1 h5{
+	margin-bottom: 0;
+	font-family: 'Ministry-Light';
+	font-size: 13px;
+	height: 37px;
+}
+#container.byggefelt .gallerylink{
+	border-radius: 5px;
+	background: #a4be91 url(/img/gallerybutton.png) no-repeat 70px center;
+	color: white;
+	text-align: center;
+	display: block;
+	width: 100%;
+	padding: 15px 0;
+}
+
+#container.byggefelt .gallerylink:hover{
+	background: #000 url(/img/gallerybutton.png) no-repeat 70px center;
+}
+
+
+
+
+.right.col.gu2 h2{font-size: 1.7em;}
+.mapwrapper,
+.mapwrapper img,
+#figures{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#imgwrapper3D img{
+	display: none;
+}
+
+#figures{
+	top:-1px;
+	left: -1px;
+}
+
+path { 
+	transition: .1s fill-opacity; 
+	fill-opacity:0.0; 
+	cursor: pointer
+}
+
+path.hilight { 
+	fill-opacity:0.0; 
+	fill: #AF002A;
+}
+
+path.dim{
+	fill:#CA0018
+}
+
+g:hover path{
+	fill-opacity:0.7;
+}
+
+g:hover path.dim{
+	fill-opacity:0.6;
+}
+
+#next{
+	background-image: url(/img/yellowArrowRight.png);
+	right: 20px;
+}
+
+#prev{
+	background-image: url(/img/yellowArrowLeft.png);	
+	left: 20px;
+}
+
+#next, #prev {
+	position: absolute;
+	top: 50%;
+	height: 42px;
+	width:42px;
+	display: block;
+	background-position: center top;
+}
+
+#back {
+	color: #FECE24;
+	font-family: 'Ministry-Light';
+	position: absolute;
+	bottom: 18px;
+	left: 50%;
+	font-size: 11px;
+	border-radius: 5px;
+	transition: opacity 200ms;
+	margin-left: -74px;
+	font-weight: 100;
+	text-transform: uppercase;
+}
+
+#back:hover {
+	text-decoration: none;
+	color: #EE7B17;
+}
+
+#guide{
+	color: #fff;
+	font-family: 'Ministry-Light';
+	position: absolute;
+	top: 50%;
+	margin-top: -60px;
+	right: 20px;
+	font-size: 11px;
+	transition: opacity 200ms;
+	text-align: right;
+}
+
+
+#next:hover, #prev:hover {
+	background-position: center bottom;
+
+}
+
+#hoverpop{
+	position: absolute;
+	background: white;
+	display: none;
+	border-radius: 2px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.28);
+}
+
+#hoverpop .table{
+	display: table;
+	vertical-align: middle;
+}
+
+#hoverpop .tut{
+	background-image: url(/img/square-tut-small.png);
+	height: 16px;
+	width: 16px;
+	position: absolute;
+	display: block;
+	right: 26px;
+	bottom:-8px;
+}
+
+#hoverpop .cell{
+	display: table-cell;
+	width: 145px;
+	height: 45px;
+	padding: 5px 10px;
+	font-family: 'Ministry-Light';
+	text-transform: uppercase;
+	font-size: 12px;
+	text-align: center;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+
+#legend, #staticlegend{
+	text-align: left;
+	position: absolute;
+	bottom: 20px;
+	right: 0;
+	color: #999;
+	z-index: inherit;
+	font-family: 'Ministry-Light';
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 11px;
+	letter-spacing: 0.03em;
+	width: 180px;
+	display: none;
+}
+
+.circle{
+	margin:1px 10px 0 20px; width: 13px; height: 13px; border-radius: 6.5px; display: inline-block; top:3px; position: relative;
+}
+
+.circle.orange{background: #e79e2e}
+.circle.gray{background: #8f8d93}
+.circle.brown{background: #5c4d49}
+
+#legend.wide{
+	width: 320px;
+}
+
+#staticlegend{	
+	width: 390px;
+}
+
+#nord{
+	display: block;
+	width: 25px;
+	height: 25px;
+	background-image: url(/img/nord.png);
+	background-position: 0 0;
+	position: absolute;
+	top:80px;
+	right: 20px;	
+}
+
+#nord.s01{background-position: -25px 0;}
+#nord.s02{background-position: -50px 0;}
+#nord.s03{background-position: -75px 0;}
+#nord.s04{background-position: -100px 0;}
+#nord.s05{background-position: -125px 0;}
+#nord.s06{background-position: -150px 0;}
+#nord.s07{background-position: -175px 0;}
+#nord.s08{background-position: -200px 0;}
+#nord.s09{background-position: -225px 0;}
+#nord.s10{background-position: -250px 0;}
+#nord.s11{background-position: -275px 0;}
+#nord.s12{background-position: -300px 0;}
+#nord.s13{background-position: -325px 0;}
+#nord.s14{background-position: -350px 0;}
+#nord.s15{background-position: -375px 0;}
+
+
+
+
+#viewtoggles{
+	display: block;
+	width: 100%;
+	background: #222421;
+	text-align: center;
+	height: 0px;
+	overflow: hidden;
+	transition: all 500ms;
+}
+
+#viewtoggles a{
+	font-family: 'Ministry-Light';
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 11px;
+	letter-spacing: 0.03em;
+	color: #fece24;
+	margin: 0 10px;
+	position: relative;
+	padding-top: 9px;
+	display: inline-block;
+}
+
+#viewtoggles a:hover{
+	color:#EE7B17;
+	text-decoration: none;
+}
+
+#viewtoggles a.active{
+	color: #999;
+	cursor: default;
+}
+
+#viewtoggles a.active:after{
+	background-image: url(/img/square-tut-small.png);
+	height: 16px;
+	width: 16px;
+	position: absolute;
+	left: 50%;
+	margin-left: -8px;
+	display: block;
+	content: '';
+}
+
+#loading{
+	position: absolute;
+	bottom: 40px;
+	color: #999;
+	z-index: inherit;
+	font-family: 'Ministry-Light';
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 11px;
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+
+#help{
+	position: absolute;
+	top: 50%;
+	right: 50%;
+	margin-right: -250px;
+	background: rgba(56,68,79,0.97);
+	width: 500px;
+	border-radius: 2px;
+	color: white;
+	margin-top: -212px;
+}
+
+#help h2{
+	font-size: 20px;
+	margin: 0 0 10px;
+}
+
+#help table{
+	font-family: 'Ministry-Light';
+	font-weight: normal;
+	font-size: 11px;
+}
+
+#help table tr td{
+	padding: 6px 10px;
+	vertical-align: top;
+}
+
+#help table tr td.middle{
+	vertical-align: middle;
+}
+
+#help table tr td.center{
+	text-align: center;
+}
+
+#help table tr td.first{
+	width:110px;
+}
+
+#help table tr td.second{
+	color:#b4b4b4;
+	position: relative;
+}
+
+#help table tr td.second:before{
+	content:'-';
+	position: absolute;
+	left: -8px;
+}
+  
+
+#help .circle{
+	width: 16px; height: 16px; border-radius: 9px; display: inline-block; top:3px; position: relative; border: 1px solid #333; margin: 0;
+}
+
+#help .inner{
+	
+	padding: 20px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.28);
+}
+
+#help .inner .closer{
+	right: 10px;
+	top: 10px;
+	background: url(../img/closer-orange.png) no-repeat center bottom;
+	position: absolute;
+	cursor: pointer;
+}
+
+#help .inner .closer:hover{
+	background: url(../img/closer-orange.png) no-repeat center top;
+}
+
+#help .inner p{
+	line-height: 22px;
+}
+
+#help .inner span{
+	font-family: 'Ministry-Light';
+	text-transform: uppercase;
+	font-size: 11px;
+	letter-spacing: 0.03em;
+	color: #FECE24;
+	display: inline-block;
+	text-align: left;
+}
+
+#viewtoggles a#helplink{
+	float: right;
+	margin: 0 230px 0 -300px;
+	width: 70px;
+	display: none;
+	overflow: visible;
+}
+
+#viewtoggles a#helplink span{
+	background: white;
+	display: inline;
+	width: 16px;
+	height: 16px;
+	color: black;
+	float: left;
+	font-family: 'Ministry-Bold';
+	border-radius:8px;
+	margin-right: 7px;
+	text-align: center;
+	line-height: 17px;
+}
+
+#legend, #guide, #prev, #next, #figures{
+	display: none;
+}
+
+#content {
+	position: relative;
+	background: #FFF;
+}
+
+@media (min-width: 1440px){
+	
+}
+
+@media (max-width: 1450px){
+	
+	#whitebox .imgwrapper{
+		max-height: 175px;
+		overflow: hidden;
+	}
+	
+	#wrapper_3d > .inner{
+		width: 70%;
+	}
+	
+}	
+
+@media (max-width: 760px){
+	#wrapper_3d, #viewtoggles{
+		display: none !important;
+	}
+}
+
+
+/* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

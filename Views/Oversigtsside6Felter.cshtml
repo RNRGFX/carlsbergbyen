@@ -1,0 +1,77 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+		
+}
+
+<div id="container" class="normal subpagelist">
+	
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+    
+    <article>
+		<div id="content" class="main">
+
+		        <div class="main gu6">
+					<h1>@Model.Content.Name</h1>
+						
+						
+					<div class="row gu6" id="entries">	
+						
+					@{
+						foreach (var page in CurrentPage.Children().Where("Visible"))
+            			{
+							var thumbUrl ="";
+							
+							if (page.HasValue("images"))
+							{
+								
+								var imagesList = page.GetPropertyValue<string>("images");
+								List<string> imagesArray = new List<string>(imagesList.Split(','));
+								
+								var dynamicMediaItem = Umbraco.Media(imagesArray[0]);
+                			
+								
+								thumbUrl = dynamicMediaItem.umbracoFile;
+								
+							}
+							
+							<div class="col gu2" id="@{@page.UrlName}_cont">
+								<div class="meta"><span class="time"></span></div>
+								<div class="imgwrapper">
+									<img src="/imagegen.ashx?image=@thumbUrl&amp;width=360" alt="@page.Name">
+								</div>
+								<div class="right">
+									<a href="#@page.UrlName"><h4>@page.Name</h4></a>
+									<p>@page.GetPropertyValue("bodyText")</p>
+								</div>
+							</div>	
+						}	
+							
+					}
+					</div>
+				</div>
+			</div>						
+		</div>
+    </article>
+</div><!-- end #container -->
+
+<script>
+$(function() {
+
+	$('#entries').wrapChildren({ childElem : '.col.gu2' , sets: 3});
+	$(window).bind( 'hashchange', function(e) {
+		var $cont = location.hash + '_cont';
+		var offset = $($cont).offset().top;
+		$('body, html').animate({scrollTop: offset - 50});
+	});
+	
+	setTimeout(function(){$(window).trigger( 'hashchange' );}, 300);
+
+});
+</script>

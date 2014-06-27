@@ -1,0 +1,80 @@
+﻿@using System
+@using System.Text.RegularExpressions
+@using System.Globalization
+
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+	
+	
+
+@{
+    var startNodeID = Parameter.nodeId;
+	@*string[] curGenres = Parameter.genres.ToString();*@
+	var curGenres = Parameter.genres;
+	int i = 0;
+
+}
+
+@if (startNodeID != null)
+{
+    @* Get the start node as a dynamic node *@
+    var startNode = Library.NodeById(startNodeID);
+    
+    if (startNode.Children.Where("Visible").Any())
+    {
+            foreach (var page in startNode.Children.Where("Visible").OrderBy("repeatable, startEndDate"))
+            {
+				
+				
+				var venueName = "";
+				var thumbUrl = "";
+				int curID = Model.Id;
+				
+				var genres = page.GetProperty("genrer").Value.ToString();
+				List<string> genreList = new List<string>(genres.Split(','));
+				
+				foreach(var genre in genreList){
+					if(curGenres.Contains(genre) && curID != page.Id && i <= 5){
+						
+						i++;
+						
+						if (page.HasValue("images"))
+						{
+							
+							var imagesList = page.GetPropertyValue<string>("images");
+							List<string> imagesArray = new List<string>(imagesList.Split(','));
+							thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+							
+						}
+						
+						if (@page.venue != ""){
+							var venue = Library.NodeById(@page.venue);
+							venueName = venue.Name;
+						}
+						
+						
+		
+						<div class="col gu2">
+							<a href="@page.Url" class="itemlink">
+								<div class="meta"><span class="date1">@page.dateField1</span><span class="date2">@page.dateField2</span><span class="venue">@venueName</span></div>
+								<div class="imgwrapper">
+									<span class="arrow"></span>
+									<img src="/imagegen.ashx?image=@thumbUrl&amp;height=184" alt="@page.Name">
+								</div>	
+								<div class="right">
+								<h4>@page.Name</h4>
+								</div>
+							</a>
+						</div>
+						
+						
+						curID = page.Id;
+						
+							
+					}
+				}
+							
+            }
+        
+    }    
+}

@@ -1,0 +1,18 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+	
+	
+
+@{
+	var startNodeID = Model.GetPropertyValue("manager");
+	var page = Library.NodeById(startNodeID);
+	
+	
+	@page.Name<br/>
+	@page.GetPropertyValue("address")<br/>
+	@page.GetPropertyValue("zip") @page.GetPropertyValue("city")<br/>
+	@page.GetPropertyValue("phone")<br/>
+	if(page.HasPropertyValue("website")){	
+		<a href="@page.GetPropertyValue("website")" target="_blank">website</a>
+	}
+	
+}

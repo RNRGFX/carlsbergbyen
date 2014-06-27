@@ -1,0 +1,3 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Globalization
+@Html.Raw(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToLower())

@@ -1,0 +1,116 @@
+﻿
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Web.Script.Serialization;
+
+@{	
+
+	var imageFeed = new List<dynamic>();	
+	int imgCount = 0;
+	var imgWidth = Functions.ImgWidth();
+	string device = Functions.GetDevice();
+	
+	if (Model.HasValue("mediaFolder")){
+		
+		var mediaFolders = Model.GetPropertyValue("mediaFolder").Split(',');				
+			
+			
+		foreach( var mediaFolder in mediaFolders){
+			@* get image folder *@
+			var imgfolder =  Library.MediaById(mediaFolder);
+				
+			@* get all images in all folders below*@				
+			foreach(dynamic photo in imgfolder.Descendants("Image")){
+				imgCount++;
+				
+				if(photo.HasValue("umbracoFile")){
+					imageFeed.Add(new
+					{
+						imageUrl = photo.umbracoFile,
+						name = photo.Name,
+						shortName = photo.Name.Replace(@"^\s+", ""),
+						width = photo.umbracoWidth,
+						height = photo.umbracoHeight,
+						description = photo.description,
+						date = photo.CreateDate,
+						copyright = photo.copyright,
+						linkTo = Library.NodeById(photo.linkTo).NiceUrl,
+						linkToName = Library.NodeById(photo.linkTo).Name,
+						rel = imgCount	
+					});
+				}
+			}				
+		}
+	}
+	
+	
+	@* manual selected images overwrite *@						
+	if (Model.HasValue("images"))
+	{
+		
+		var imagesList = Model.GetPropertyValue<string>("images");
+		List<string> imagesArray = new List<string>(imagesList.Split(','));
+	
+		
+		foreach( var img in imagesArray){
+			imgCount++;
+			var photo = Model.MediaById(img);
+			
+			imageFeed.Add(new
+			{
+				imageUrl = photo.umbracoFile,
+				name = photo.Name,
+				shortName = photo.Name.Replace(@"^\s+", ""),
+				width = photo.umbracoWidth,
+				height = photo.umbracoHeight,
+				description = photo.description,
+				date = photo.CreateDate,
+				copyright = photo.copyright,
+				linkTo = Library.NodeById(photo.linkTo).NiceUrl,
+				linkToName = Library.NodeById(photo.linkTo).Name,	
+				rel = imgCount
+			});
+		}
+	}
+	
+	
+	imageFeed.Reverse();
+					
+	foreach(var photo in imageFeed){
+		
+		var dimension = (Convert.ToInt32(photo.width) > Convert.ToInt32(photo.height)) ? "height" : "width";
+		
+		<div class="galleryItem"
+			data-date="@photo.date.ToString("yyyyMMdd")"
+			data-copyright="@photo.copyright"
+			data-name="@photo.shortName">
+			 <div class="imgwrapper">
+				 @if (device == "mobile"){
+				 <img src="/imagegen.ashx?image=@photo.imageUrl&amp;width=@imgWidth" alt="@photo.copyright"/>
+				 } else {
+
+					 <a href="/imagegen.ashx?image=@photo.imageUrl&amp;width=@imgWidth" rel="gallery" class="fancybox fancybox.image"
+						 data-desc="@photo.description"
+						 data-name="@photo.name"
+						 data-width="@photo.width"
+						 data-height="@photo.height"
+						 data-date="@photo.date.ToString("d. MMMM yyyy")"
+						 data-link-to="@photo.linkTo"
+						 data-link-to-name="@photo.linkToName"
+						 data-copyright="@photo.copyright"
+						 data-imgurl="@photo.imageUrl"
+						 data-count="@photo.rel/@imgCount">
+						<span class="arrow"></span>
+					 	<img src="/imagegen.ashx?image=@photo.imageUrl&amp;@dimension=220"  alt="@photo.copyright"/>
+					 </a>
+				 }
+			 </div>
+			 <div class="imagedata galleryItem">
+				 <div class="data active date" ><span>Dato:</span> @photo.date.ToString("d. MMMM yyyy")</div>
+				 <div class="data name" ><span>Filnavn:</span> @photo.name</div>
+				 <div class="data copyright" ><span>Fotograf:</span> @photo.copyright</div>
+			</div>			 
+			 
+		</div>	
+			
+	}	
+}

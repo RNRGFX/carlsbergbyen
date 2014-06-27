@@ -1,0 +1,49 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Web.Script.Serialization;
+@using System.Text.RegularExpressions
+
+@{
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	var startNode = Library.NodeById(2281);
+	var organizers = new List<dynamic>();
+	var feed = new List<dynamic>();
+	
+	foreach (var page in startNode.Children.Where("Visible"))
+	{
+		
+		var gps = page.HasValue("gps") ? page.GetPropertyValue("gps") : "0, 0";
+		List<string> latLng = new List<string>(gps.Split(','));
+		
+		var web1url = page.HasValue("website1") ? Html.Raw("http://")+page.GetProperty("website1").Value : "";
+		var web2url = page.HasValue("website2") ? Html.Raw("http://")+page.GetProperty("website2").Value : "";
+		
+		organizers.Add(new
+		{
+			id = page.Id.ToString(),
+			name = page.Name,
+			contact_name = page.GetProperty("contact").Value,
+			address1 = page.GetProperty("address").Value,
+			address2 = page.GetProperty("zip").Value+" "+page.GetProperty("city").Value,
+			phone = page.GetProperty("phone").Value,
+			email = page.GetProperty("eMail").Value,
+			link1_url = web1url,
+      		link1_text = page.GetProperty("website1").Value,
+			link2_url = web2url,
+      		link2_text = page.GetProperty("website2").Value
+
+		});
+	}
+	
+	feed.Add(new
+	{
+		updated = DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+		organizers = organizers,
+	 });
+	
+	
+	var output = serializer.Serialize(feed).ToString().Substring(1);
+	output = output.Substring(0, output.Length-1);
+	
+}
+
+@Html.Raw(output)

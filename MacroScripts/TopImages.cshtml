@@ -1,0 +1,53 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{
+	if (Model.HasValue("images"))
+	{
+		
+		var imagesList = Model.GetPropertyValue<string>("images");
+		List<string> imagesArray = new List<string>(imagesList.Split(','));
+		var imgWidth = Functions.ImgWidth();
+
+		
+		<div id="topimagewrapper">
+	    
+    	<div id="topimages" class="cycle-slideshow" 
+		    data-cycle-fx=fade
+		    data-cycle-timeout=7000
+		    data-cycle-speed=2000
+			data-cycle-swipe=true
+		    data-cycle-manual-speed=300
+		    data-cycle-slides="> div"
+		    data-cycle-pager=".cycle-pager"
+	        data-cycle-pager-template="<span></span>"
+
+		    >
+		 @{   
+	   
+	
+	    foreach( var img in imagesArray){
+			
+			var photo = Model.MediaById(img);
+		
+	        <div class="slide"><img src="/imagegen.ashx?image=@photo.umbracoFile&amp;width=@imgWidth" alt="@photo.Name"/>
+				@if(photo.copyright != ""){	<div class="copyright">Billede: @photo.copyright</div>}
+			</div>
+				
+	        }
+	        
+	    }    
+	    </div>
+			
+    	@if(imagesArray.Count() > 1){
+	    	<div id="pagerwrapper"><div class="cycle-pager"></div></div>
+    	}
+    	
+    	
+	    	
+    </div><!-- end #topimagewrapper -->
+	                                                                       
+	} else {
+	
+		<div class="clearfix top-padding"></div>
+	}
+}

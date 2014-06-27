@@ -1,0 +1,111 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Web.Script.Serialization;
+@{	
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	
+	var buildings = new List<dynamic>();
+	var folder = Parameter.folder;	
+	foreach(var page in Model.Children.Where("Visible")){
+		
+		var thumbUrl = "";
+		var description = page.description;
+		var Url =  page.NiceUrl();
+		var readMore = "Læs mere om "+page.Name;
+		bool showSlider = page.showSlider;
+		var hilight = (page.showSlider) ? "hilight" : "dim";
+				
+		if (showSlider){
+		
+				if (page.HasValue("images")){
+					var imagesList = page.GetPropertyValue<string>("images");
+					List<string> imagesArray = new List<string>(imagesList.Split(','));
+					thumbUrl = page.MediaById(imagesArray[0]).umbracoFile;
+				}
+				
+												
+				
+				buildings.Add(new
+				{	
+					SVGpath = folder,
+					Name = page.Name,
+					ID = page.buildfield_ID,
+					Url = Url,
+					Parent = page.Name,
+					Description = description,
+					Thumbnail = (thumbUrl != "") ? "/imagegen.ashx?image="+@thumbUrl+"&amp;width=246" : "",
+					Readmore = readMore,
+					showSlider = showSlider,
+					hilight = hilight
+				});
+		
+		} else {
+			
+			if (page.Children.Where("Visible").Count() > 0){
+			foreach(var subpage in page.Children.Where("Visible")){
+				
+				if (subpage.existing || subpage.showSlider){
+					
+					description = subpage.description;
+					Url = subpage.NiceUrl();
+					readMore = (subpage.showSlider) ? "Læs mere om "+subpage.Name : "Læs mere om "+page.Name;
+					showSlider = subpage.showSlider; 
+					hilight = "dim";
+					
+					if (subpage.existing){
+						hilight = "dim";	
+					} else if (subpage.showSlider && !subpage.existing){
+						hilight = "hilight";
+					} 
+					
+					if (subpage.HasValue("images")){
+						var imagesList = subpage.GetPropertyValue<string>("images");
+						List<string> imagesArray = new List<string>(imagesList.Split(','));
+						thumbUrl = subpage.MediaById(imagesArray[0]).umbracoFile;
+					}
+					
+					@* if has a redirect *@
+					if (subpage.HasValue("umbracoInternalRedirectId")){
+						var redirpage = Library.NodeById(subpage.GetPropertyValue("umbracoInternalRedirectId"));	
+						description = (redirpage.HasValue("description")) ? redirpage.GetPropertyValue("description") : "";
+						@*Url = redirpage.NiceUrl();*@
+						showSlider = true;
+						
+						if (redirpage.HasValue("images")){
+							var imagesList = redirpage.GetPropertyValue<string>("images");
+							List<string> imagesArray = new List<string>(imagesList.Split(','));
+							thumbUrl = redirpage.MediaById(imagesArray[0]).umbracoFile;
+							readMore = "Læs mere om "+subpage.Name;
+						}	
+							
+					}
+									
+					
+					buildings.Add(new
+					{	
+						SVGpath = folder,
+						Name = subpage.Name,
+						ID = subpage.buildfield_ID,
+						Url = Url,
+						Parent = page.Name,
+						ParentID = page.buildfield_ID,
+						Description = description,
+						Thumbnail = (thumbUrl != "") ? "/imagegen.ashx?image="+@thumbUrl+"&amp;width=246" : "",
+						Readmore = readMore,
+						showSlider = showSlider,
+						hilight = hilight
+					});
+				}
+					
+			}
+		}	
+			
+		}
+		
+		
+					
+		
+	}	
+}
+<script>
+	var buildings = @Html.Raw(serializer.Serialize(buildings));
+</script>

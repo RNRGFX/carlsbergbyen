@@ -1,0 +1,52 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+		
+}
+
+
+
+<div id="container" class="normal companies">
+	
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+    
+    <article>
+		<div id="content" class="main">
+
+		        <div class="main gu6">
+					<h1>@Model.Content.Name</h1>
+						
+						
+					<div class="row gu6" id="entries">	
+						
+						<div class="row col">
+							<div class="col gu2">Virksomhed</div>
+							<div class="col gu2">Adresse</div>
+						</div>
+						
+					
+						@foreach (var page in CurrentPage.Children().Where("Visible"))
+            			{
+							
+						<div class="row col">							
+							<a href="http://@page.GetPropertyValue("url")" target="_blank">
+								<div class="col gu2">@page.Name</div>
+								<div class="col gu2">@page.GetPropertyValue("address")</div>
+							</a>
+						</div>
+							
+						}
+							
+
+					</div>
+				</div>
+			</div>						
+		</div>
+    </article>
+</div><!-- end #container -->

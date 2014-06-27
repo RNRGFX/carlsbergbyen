@@ -1,0 +1,26 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Web.Script.Serialization; 
+@using System.Text
+
+@{
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	var textField = (HttpContext.Current.Request.QueryString["lan"] == null || HttpContext.Current.Request.QueryString["lan"] == "da") ? "contentTextDa" : "contentTextEn";
+
+	var feed = new List<dynamic>();
+	var now = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+	
+	feed.Add(new
+	{
+		updated = now,
+		language = HttpContext.Current.Request.QueryString["lan"],
+		entries = Model.GetPropertyValue(textField),
+			
+	 });
+	
+	
+	var output = serializer.Serialize(feed).ToString().Substring(1);
+	output = output.Substring(0, output.Length-1);
+	
+}
+
+@Html.Raw(output)

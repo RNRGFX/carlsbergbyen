@@ -1,0 +1,32 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using umbraco.MacroEngines.Library;
+	@{
+		
+		var imgWidth = @Functions.ImgWidth();
+	}
+
+@foreach (var page in Model.Children().Where("Visible"))
+{
+	
+	var image = page.HasValue("image") ? page.MediaById(page.GetPropertyValue("image")) : "";
+	var styleNum = page.HasValue("txtcolor") ? page.GetPropertyValue("txtcolor") : "";
+	var style = umbraco.library.GetPreValueAsString(int.Parse(styleNum));
+	var shadow = (page.GetPropertyValue("shadow") == "1") ? "shadow" : "";
+	
+	if (page.HasValue("linkTo")){
+		var node = page.GetPropertyValue("linkTo");
+	}
+	
+	<div class="slide @style @shadow">
+		
+		<img src="/imagegen.ashx?image=@image.umbracoFile&amp;width=@imgWidth" alt="@page.Name"/>
+		<div class="copyright">@image.GetPropertyValue("copyright")</div>
+		<div class="text">
+			<div class="inner gu6">
+				@Html.Raw(page.GetPropertyValue("contentText"))
+			</div>
+		</div>	
+					
+	</div>
+	
+}

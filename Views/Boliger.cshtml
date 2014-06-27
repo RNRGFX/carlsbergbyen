@@ -1,0 +1,86 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+		
+}
+
+
+<div id="container" class="normal">
+	
+	
+
+	@Umbraco.RenderMacro("TopImages")
+
+    
+    <article>
+		<div id="content" class="main">
+		
+	        <div class="clearfix spacing"></div>
+		        <div class="main gu6">
+		        	<div class="row">
+						<div class="col gu4">
+							<h1 class="normal">@Model.Content.Name</h1>
+							<div id="actions">
+								<a href="#" class="shareholder yellowbutton"></a>
+								@*Umbraco.RenderMacro("GetLocation")*@
+								<a href="javascript:window.print();" class="print yellowbutton"></a>
+									
+								@{Html.RenderPartial("Sharer");}
+							</div>
+							<div class="clearfix"></div>
+							<div class="description">							
+								
+								@Umbraco.Field("description", convertLineBreaks: true)
+							</div>	
+							<div class="bodytext">							
+								@Model.Content.GetPropertyValue("bodyText")
+							</div>
+						</div>
+						
+						<div class="col gu2">
+							
+							<div class="clearfix spacing"></div>
+							<h2  style="line-height:24px; margin-bottom:8px;">Tilmeld dig interesselisten</h2>
+							<a href="@Umbraco.TypedContent(3748).Url" class="bigyellowparent">
+								<div class="imgwrapper">
+									<span class="arrow middle black"></span>
+									<img src="/img/interesseliste.jpg" style="min-width: 275px;" alt="Tilmeld dig interesselisten">	
+								</div>
+								
+								<div class="bigyellow submitback">
+									<div class="button">Gå til listen</div>
+								</div>	
+										
+							</a>
+							
+							<div class="clearfix spacing"></div>
+						
+							<h2 style="line-height:24px; margin-bottom:8px;">RECLAIMING THE CITY</h2>
+							<a href="@Umbraco.TypedContent(3005).Url">
+								<div class="imgwrapper">
+									<span class="arrow  middle black"></span>
+									<img src="/imagegen.ashx?image=/media/102751/bagelefanterne_utopiancityscape_1440px.jpg&amp;width=360" alt="Reclaming the city">	
+								</div>
+							</a>
+							<p style="font-family:'Ministry-Light', sans-serif; color:#535353">Inspirationsgalleri af de kommende boliger i Carlsberg Byen. 3D visualiseringer af Entasis Arkitekter fra 2007 af helhedsplanen for Carlsberg Byen.</p>		
+							
+							<div class="clearfix spacing"></div>
+								
+							
+										
+		    
+						</div>	
+								
+							
+							
+								
+							
+						</div>
+		        	</div>
+		        </div>
+		
+    </article>
+</div><!-- end #container -->

@@ -1,0 +1,75 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+	
+@{
+
+	
+	foreach (var page in Model.Children.Where("Visible"))
+	{
+	   
+		if (page.Children.Where("Visible").Count() > 0)
+	   {
+		  
+			 foreach (var subpage in page.Children.Where("Visible").OrderBy("status"))
+			 {
+				
+				 
+				
+				 var thumbUrl = "";
+				 
+				 if (subpage.HasValue("images"))
+				 {
+					 
+					 var imagesList = subpage.GetPropertyValue<string>("images");
+					 List<string> imagesArray = new List<string>(imagesList.Split(','));
+					 thumbUrl = subpage.MediaById(imagesArray[0]).umbracoFile;
+					 
+				 }
+				 
+				 <div class="col gu2" data-area="@subpage.GetPropertyValue("area")" data-property="@page.Name" data-status="@subpage.GetPropertyValue("status")">
+					<a href="@subpage.Url">
+					 <div class="imgwrapper">
+						 <span class="arrow"></span>
+						 <img src="/imagegen.ashx?image=@thumbUrl&amp;width=262" alt="@subpage.Name">
+					 </div>
+					 </a>
+						 
+					<a class="location" href="http://maps.google.dk/maps?q=@page.GetPropertyValue("address"),+@page.GetPropertyValue("zip") " target="_blank"></a>
+			 	 
+					 <div class="info">
+						 <a href="@subpage.Url">
+							 <h4>@page.Name</h4>
+							 <h5>@subpage.Name</h5>
+							
+							 <div class="data">
+								 
+								<table>
+								<tr>
+									<td class="left">Størrelse:</td>
+									<td class="right">@subpage.GetPropertyValue("area") m<sup>2</sup></td>
+								</tr>
+									
+								<tr class="grey">
+									<td class="left">Anvendelse:</td>
+									<td class="right">@subpage.GetPropertyValue("anvendelse")</td>
+								</tr>
+								<tr>
+									<td class="left">Status:</td>
+									<td class="right status @subpage.GetPropertyValue("status")">@subpage.GetPropertyValue("status")</td>
+								</tr>
+								</table>
+		 					</div><!-- end data -->
+						</a>	 
+					 </div><!-- end info -->
+
+				
+				 </div><!-- end col gu2 -->
+							
+				
+				 
+			 }
+
+	   }
+	}
+	
+
+}

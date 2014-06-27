@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<imageIndex>
+  <_C>
+    <image>
+      <originalFileName>CarlsbergByen_Map_0000.jpg</originalFileName>
+      <size>161823</size>
+      <dateLastModified>Mon, 24 Feb 2014 13:18:10 GMT</dateLastModified>
+      <width>1440</width>
+      <height>937</height>
+      <cachedImage>
+        <fileName>CAR_d6ff80480a7e6fd27caa506627de1aa8759a665a3f2234fc437dfe514aeadfce.jpeg</fileName>
+        <dateCreated>Mon, 24 Feb 2014 16:14:00 GMT</dateCreated>
+        <imageFormat>jpeg</imageFormat>
+        <compression>90</compression>
+        <width>400</width>
+        <height>260</height>
+        <bgColor>#FFFFFF</bgColor>
+        <transparent>True</transparent>
+        <border>0</border>
+        <borderColor>#000000</borderColor>
+        <constrain>False</constrain>
+        <pad>False</pad>
+      </cachedImage>
+      <cachedImage>
+        <fileName>CAR_2b789903c12930f6660c86e967e3bf94fea03e7cda04934c306122b54bdb8d92.jpeg</fileName>
+        <dateCreated>Mon, 24 Feb 2014 18:29:13 GMT</dateCreated>
+        <imageFormat>jpeg</imageFormat>
+        <compression>90</compression>
+        <width>360</width>
+        <height>234</height>
+        <bgColor>#FFFFFF</bgColor>
+        <transparent>True</transparent>
+        <border>0</border>
+        <borderColor>#000000</borderColor>
+        <constrain>False</constrain>
+        <pad>False</pad>
+      </cachedImage>
+    </image>
+  </_C>
+</imageIndex>

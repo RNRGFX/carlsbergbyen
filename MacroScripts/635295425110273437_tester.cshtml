@@ -1,0 +1,46 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@using System.Web.Script.Serialization;
+@using System.Text.RegularExpressions
+@using System.Globalization;
+
+@{
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	var startNode = Library.NodeById(2277);
+	var events = new List<dynamic>();
+	var feed = new List<dynamic>();
+	var date_from = (HttpContext.Current.Request.QueryString["date_from"] != null) ? HttpContext.Current.Request.QueryString["date_from"] : DateTime.Now.Date.ToString("yyyyMMdd");
+	var date_to = (HttpContext.Current.Request.QueryString["date_to"] != null) ? HttpContext.Current.Request.QueryString["date_to"] : DateTime.Now.Date.ToString("yyyyMMdd");
+	bool orderDesc = (HttpContext.Current.Request.QueryString["sort_descending"] == null || HttpContext.Current.Request.QueryString["sort_descending"] == "0") ? false : true;
+	var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+	CultureInfo enUS = new CultureInfo("en-US"); 
+	
+	
+	string dateString;
+    DateTime dateValue;
+	var substr = date_from.IndexOf("GMT")-1;
+	
+	dateString = date_from.Substring(0, substr);
+	@*Mon Mar 03 2014 11:03:07 GMT-0800 (PST)*@
+	try {
+         dateValue = DateTime.ParseExact(dateString, "ddd' 'MMM' 'MM' 'yyyy' 'HH':'mm':'ss", enUS);
+         @dateValue
+      } 
+	catch (FormatException) {
+		<span>nogo</span>
+         <span>_</span>@dateString<span>_</span>
+      }	
+	
+	
+	DateTime now = DateTime.Now;
+	<br/>
+	@now.ToString("ddd' 'MMM' 'MM' 'yyyy' 'HH':'mm':'ss", enUS)
+
+	@*
+	DateTime startDate = DateTime.ParseExact(date_from, "yyyyMMdd", CultureInfo.InvariantCulture);
+	DateTime endDate = DateTime.ParseExact(date_to, "yyyyMMdd", CultureInfo.InvariantCulture);
+	*@
+	
+}
+
+

@@ -1,0 +1,61 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{
+	string data = Model.GetPropertyValue("speclist").Replace("\"", "");
+	List<string> datalist = data.Split(new char[]{'[',']',','},StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
+
+	var output = "";
+	int iStart = 0;
+	
+	
+	
+	
+	if (Model.HasValue("gps")){
+		var gps = Model.GetPropertyValue("gps");
+		List<string> latLng = new List<string>(gps.Split(','));
+		
+		
+		<script>
+		var lat = @latLng[0];
+		var lng = @latLng[1];
+		var title = '@Model.Name';
+		</script>
+		
+		<div id="map-canvas"></div>
+		
+	}
+	
+	
+	
+	foreach(var item in datalist){
+		
+	
+				
+		@* is first or second field? *@
+		bool start = iStart % 2 == 0 ? true : false;
+		
+			
+		@* has the first field content *@
+		if (!String.IsNullOrEmpty(item) && item != "null"){
+			if(start) {
+				
+				output += "<tr><td class=\"left\" >"+@item+"</td>";
+				
+			} else {
+				
+				output += "<td class=\"right\">"+@item+"</td></tr>";
+			}
+			
+			
+			iStart ++;
+		}	
+					
+	}
+	<div class="datawrapper">
+		<table>
+		@Html.Raw(output)
+		</table>
+	</div>
+	
+	
+}	

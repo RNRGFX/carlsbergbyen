@@ -1,0 +1,13 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@{
+	
+	var prefix = Parameter.prefix;
+	var folder = Parameter.folder;
+	
+	for(int i = 0; i <= 15; i++){
+		var rel = (i>9) ? i.ToString() : "0"+i;
+		<img rel="@rel" src="@folder/CarlsbergByen_@{@prefix}_00@{@rel}.jpg" alt="3Dimg"/>		
+	}
+	
+}

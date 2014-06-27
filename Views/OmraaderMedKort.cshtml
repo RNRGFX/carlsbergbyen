@@ -1,0 +1,83 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+   Layout = "Master.cshtml";
+}
+
+@section head{
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyc2x8OiS22tSfQRN-7L7fkliAHeyVEk8&amp;sensor=false"></script>	
+	<script type="text/javascript" src="/scripts/omraade_map.js?v2"></script>
+	<link rel="stylesheet" href="/css/omraade_map.css?v2">	
+}
+
+<div id="container" class="normal subpagelist områder">
+	
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+	<div id="mapwrapper">
+		<div id="map-canvas" style="height:580px"></div>	
+			
+	</div>	
+		
+		<div id="whitebox">
+			<div class="inner"></div>
+			<div class="tut"></div>		
+		</div>
+    
+    <article>
+		<div id="content" class="main">
+		        <div class="main gu6">
+					<h1>@Model.Content.Name</h1>
+						
+					<div class="pos-right" id="searchbox">
+						<div class="inner gu1">
+							<span class="text">Søg</span>
+							<div class="main hidden">									
+								<input class="search" type="text" id="eventsearch" placeholder="Søg i Bygningsbeskrivelser">
+								<a href="#" class="closer"></a>								
+							</div>
+						</div>
+					</div>
+						
+					<div class="row gu6" id="entries">	
+						@{
+							foreach (var page in CurrentPage.Children().Where("Visible"))
+							{
+								foreach (var subpage in page.Children().Where("Visible")){
+									var thumbUrl = "";
+									if (subpage.HasValue("images"))
+									{
+										
+										var imagesList = subpage.GetPropertyValue<string>("images");
+										List<string> imagesArray = new List<string>(imagesList.Split(','));
+										
+										var dynamicMediaItem = Umbraco.Media(imagesArray[0]);
+										thumbUrl = dynamicMediaItem.umbracoFile;
+										
+									}
+										
+									
+									<div class="col gu2">
+										<a href="@subpage.Url">
+										<div class="meta"><span class="time"></span></div>
+										<div class="imgwrapper">
+											<span class="arrow"></span>
+											<img src="/imagegen.ashx?image=@thumbUrl&amp;width=360" alt="@subpage.Name"> 
+										</div>
+										<div class="right">
+											<h4>@subpage.Name</h4>
+											<p>@subpage.GetPropertyValue("description")</p>
+										</div>
+											</a>
+									</div>	
+								}
+							}
+						}
+					
+					</div>
+				</div>
+			</div>						
+		
+    </article>
+</div><!-- end #container -->

@@ -1,0 +1,19 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+
+
+@{
+	
+	var importDate = Model.GetPropertyValue("OrgCreateDate");				
+	var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+				
+	if(importDate.ToString().IndexOf("Z") != -1)
+	{
+		dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+	}
+	
+	var convertDate = DateTime.ParseExact(importDate, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+	var date = (Model.GetPropertyValue("OrgCreateDate") != "") ? convertDate.ToString("dd. MMMM yyyy") : Model.CreateDate.ToString("dd. MMMM yyyy");	
+	
+}
+@date

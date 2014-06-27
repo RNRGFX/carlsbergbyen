@@ -1,0 +1,25 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+
+
+@if(@Model.GetPropertyValue("location") != "" || @Model.GetPropertyValue("locationGPS") != ""){
+	string loc = (@Model.GetPropertyValue("location") != "") ? "venue" : "GPS";
+	var url = "";
+	
+	switch(loc){
+		case "venue":
+		var venue = Library.NodeById(@Model.GetPropertyValue("location"));
+		var venueLoc = (venue.HasValue("gps")) ? venue.GetPropertyValue("gps") : venue.GetPropertyValue("address");
+		var venueAddress = venue.GetPropertyValue("address");
+		url = "https://maps.google.dk/maps?q="+@venueLoc;
+		break;
+		
+		case "GPS":
+		url = "https://maps.google.dk/maps?q="+@Model.GetPropertyValue("locationGPS");
+		break;
+	}
+	
+	if(url != ""){
+		<a href="@url" class="location yellowbutton" target="_blank"></a>
+	}
+}

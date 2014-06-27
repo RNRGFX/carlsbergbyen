@@ -1,0 +1,98 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+		
+}
+
+@section head{
+	
+	<script type="text/javascript" src="/scripts/snap.svg-min.js"></script>
+	<link rel="stylesheet" href="/css/3d-overview.css?v3.1">
+	
+		
+	@if(CurrentPage.HasValue("buildfield_ID")){	
+		<script>
+			$(document).ready(function(){
+				var svg_mark =  Snap("#mark");
+				var id = '@CurrentPage.buildfield_ID';
+				var url = '/3d/MAP/3D/svg/'+id+'_0000.svg';
+				Snap.load(url,function(f){ 
+					var g = f.select('g');
+					var path = f.selectAll('path');
+					path.attr({fill: '#B01D34'});
+					svg_mark.append(g);   
+				})	 
+			})
+		</script>	
+	}
+
+}
+
+<div id="container" class="normal bygningsbeskrivelse">
+	
+	@Umbraco.RenderMacro("TopImages")
+	@{
+		var backName = (CurrentPage.Parent.showSlider) ? @CurrentPage.Parent.Name : @CurrentPage.Parent.Parent.Name;
+		var backUrl = (CurrentPage.Parent.showSlider) ? @CurrentPage.Parent.Url : @CurrentPage.Parent.Parent.Url;
+		
+	}
+    
+
+
+    <article>
+		<div id="content" class="main">
+		
+	        <div class="clearfix spacing"></div>
+		        <div class="main gu6">
+		        	<div class="row">
+						<div class="col gu4">
+							<h1 class="normal">@Model.Content.Name</h1>
+							<div id="actions">
+								<a href="#" class="shareholder yellowbutton"></a>
+								<a href="javascript:window.print();" class="print yellowbutton"></a>
+									
+								@{Html.RenderPartial("Sharer");}
+							</div>
+							<div class="clearfix"></div>
+							<div class="description">							
+								@Umbraco.Field("description", convertLineBreaks: true)
+							</div>	
+							<div class="bodytext">							
+								@Model.Content.GetPropertyValue("bodyText")
+							</div>
+						</div>
+						
+						<div class="col gu2 right">
+							
+								<div class="clearfix spacing45"></div>
+								<h2 class="top">Oversigtskort</h2>
+								
+									
+								
+									
+								<a href="@Umbraco.TypedContent(3354).Url" class="smallmapwrapper gu2">
+										
+									 <span class="arrow"></span>
+	
+									<img src="/3d/sitplan.jpg" alt="sitplan"/>
+									<svg id="mark" viewBox="0 0 1440 937" preserveAspectRatio="xMinYMin"></svg>
+									<div class="clearfix"></div>
+									<div class="mapback">Gå til oversigtskort</div>
+								</a>
+										
+										
+										
+
+								
+								
+							
+						</div>
+		        	</div>
+		        </div>
+		</div>
+    </article>
+</div><!-- end #container -->
+							

@@ -1,0 +1,24 @@
+@import url("http://hello.myfonts.net/count/29a83d");
+@font-face {font-family: 'Ministry-Light';src: url('fonts/29A83D_0_0.eot');src: url('fonts/29A83D_0_0.eot?#iefix') format('embedded-opentype'),url('fonts/29A83D_0_0.ttf') format('truetype');}
+@font-face {font-family: 'Ministry-Bold';src: url('fonts/29A83D_1_0.eot');src: url('fonts/29A83D_1_0.eot?#iefix') format('embedded-opentype'),url('fonts/29A83D_1_0.ttf') format('truetype');}
+/* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+.yellowbox {
+color: black; background: #fecc4e; padding: 10px;  border-radius:5px; font-family: 'Ministry-Light'; font-size: 12px; text-transform: uppercase;
+}
+

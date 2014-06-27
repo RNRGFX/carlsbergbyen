@@ -1,0 +1,120 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+
+@using System.Text.RegularExpressions
+@using System.Globalization
+
+
+@helper urlify(string link){
+	System.Globalization.TextInfo textInfo = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo;
+
+	link = textInfo.ToTitleCase(link);
+	link = Regex.Replace(link, @"[^\w\d\,]+", "");
+	link = Regex.Replace(link, @"[Øø]+", "oe");
+	link = Regex.Replace(link, @"[Åå]+", "aa");
+	link = Regex.Replace(link, @"[Ææ]+", "ae");	
+	@link;	
+}	
+
+@{
+    int startNodeID = Convert.ToInt32(Parameter.nodeId);
+	string classes = (Parameter.classes != "") ? Parameter.classes : "";
+	
+	var newsSelection = Model.newsAll;
+	List<string> newsArray = new List<string>(newsSelection.Split(','));
+	
+		
+	
+	
+	
+	
+}
+
+
+
+@if (startNodeID != null)
+{
+	
+    @* Get the start node as a dynamic node *@
+    var newspage = Library.NodeById(newsArray[startNodeID]);
+	
+	
+    
+    
+			
+			var category = newspage.HasValue("category") ? newspage.GetPropertyValue("category") : "<a href=\"/nyheder?category=GenerelleNyheder\">Generelle Nyheder</a>";
+			var catUrls = "GenerelleNyheder";
+	
+			if (newspage.HasValue("category")){
+					
+				List<string> catArray = new List<string>(category.Split(','));
+				var categoryString = new List<dynamic>();
+				var urlString = new List<dynamic>();
+				
+				foreach (var cat in	catArray){
+					var aString = "<a href=\"/nyheder?category="+@urlify(cat)+"\">"+@cat+"</a>";
+					var uString = urlify(cat);
+					
+					categoryString.Add(aString);
+					urlString.Add(uString);
+					
+				}
+				
+				category = string.Join(", ", categoryString);
+				catUrls = string.Join(", ", urlString);
+			}
+			
+			
+				
+				var thumbUrl = "";
+				
+				if (newspage.HasValue("images"))
+				{
+					
+					var imagesList = newspage.GetPropertyValue<string>("images");
+					List<string> imagesArray = new List<string>(imagesList.Split(','));
+					thumbUrl = newspage.MediaById(imagesArray[0]).umbracoFile;
+					
+				} else {
+					thumbUrl = newspage.GetPropertyValue("thumbnail");
+				}
+				
+				var importDate = newspage.GetPropertyValue("OrgCreateDate");
+				
+				var dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+					
+				if(importDate.ToString().IndexOf("Z") != -1)
+				{
+					dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
+				}
+				
+				var convertDate = DateTime.ParseExact(importDate, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+				var date = (newspage.GetPropertyValue("OrgCreateDate") != "") ? convertDate.ToString("dd. MMMM yyyy") : newspage.CreateDate.ToString("dd. MMMM yyyy");	
+	
+				
+				<div class="item @classes">
+					
+					<div class="meta">
+						<span class="category">Nyhedskategori: @Html.Raw(category)</span>
+						<span class="date">@date</span>
+					</div>
+					<a href="@newspage.Url" class="newslink">
+						<div class="imgwrapper">
+							<span class="arrow"></span>
+							<img src="/imagegen.ashx?image=@thumbUrl&amp;width=750" alt="@newspage.Name">
+						</div>
+						<div class="right">
+						<h4>@newspage.Name</h4>
+						<p>@newspage.GetPropertyValue("description")</p>
+						</div>
+						<div class="clearfix"></div>
+					</a>
+				</div>
+
+		
+	
+	
+	
+
+	
+	
+}

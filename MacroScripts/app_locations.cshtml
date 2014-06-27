@@ -1,0 +1,42 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Web.Script.Serialization; 
+@using System.Text.RegularExpressions
+@using System.Text
+
+@{
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	var startNode = Library.NodeById(2251);
+	var locs = new List<dynamic>();
+	var feed = new List<dynamic>();
+	
+	foreach (var page in startNode.Children.Where("Visible"))
+	{
+		
+		var gps = page.HasValue("gps") ? page.GetPropertyValue("gps") : "0, 0";
+		List<string> latLng = new List<string>(gps.Split(','));
+		
+		locs.Add(new
+		{
+			id = page.Id.ToString(),
+			name = page.Name,
+			address1 = page.GetProperty("address").Value,
+			address2 = page.GetProperty("zip").Value+" "+page.GetProperty("city").Value,
+			address3 = "",
+			lat = latLng[0],
+			lon = latLng[1]
+		});
+	}
+	
+	feed.Add(new
+	{
+		updated = DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+		locations = locs,
+	 });
+	
+	
+	var output = serializer.Serialize(feed).ToString().Substring(1);
+	output = output.Substring(0, output.Length-1);
+	
+}
+
+@Html.Raw(output)

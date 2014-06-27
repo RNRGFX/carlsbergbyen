@@ -1,0 +1,46 @@
+﻿@inherits umbraco.MacroEngines.DynamicNodeContext
+@using System.Web.Script.Serialization;
+
+
+@{
+	var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+	var startNode = Library.NodeById(2446);
+	var areaChords = new List<dynamic>();
+	var callback = HttpContext.Current.Request.QueryString["callback"];
+	
+
+	
+	foreach (var page in startNode.Children.Where("Visible"))
+	{
+	   
+		if (page.Children.Where("Visible").Count() > 0)
+	    {
+		   foreach (var subpage in page.Children.Where("Visible"))
+			 {
+				 if (subpage.HasValue("coordinates")){
+					
+					var thumbUrl = "";
+ 					
+					 if (subpage.HasValue("images")){
+						var imagesList = subpage.GetPropertyValue<string>("images");
+					 	List<string> imagesArray = new List<string>(imagesList.Split(','));
+						thumbUrl = subpage.MediaById(imagesArray[0]).umbracoFile;
+					}
+					 
+					areaChords.Add(new
+					{
+						name = subpage.Name,
+						parent = page.Name,	
+						coords = "["+subpage.GetPropertyValue("coordinates").Replace("\n", "")+"]",
+						url = subpage.Url,
+						description = subpage.GetPropertyValue("description"),
+						thumbnail = "/imagegen.ashx?image="+@thumbUrl+"&amp;width=246"
+						
+				 	});
+				 }
+			 }
+		}
+	}
+	
+	@Html.Raw(callback + serializer.Serialize(areaChords))
+}

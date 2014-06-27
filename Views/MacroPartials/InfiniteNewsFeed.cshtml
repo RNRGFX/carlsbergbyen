@@ -1,0 +1,23 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+	
+@{
+	
+	var getParameterFromTheMacro =   Model.MacroParameters;
+ 	var startNodeID = getParameterFromTheMacro.SingleOrDefault(x => x.Key == "nodeId").Value;
+    
+	@startNodeID
+	
+	int limit = Convert.ToInt32(HttpContext.Current.Request.QueryString["limit"]);
+	int startIndex = Convert.ToInt32(HttpContext.Current.Request.QueryString["index"]);
+	string morelink = HttpContext.Current.Request.QueryString["showmore"];
+	string classes = HttpContext.Current.Request.QueryString["classes"];
+
+
+
+	if (startNodeID != null)
+	{
+		@* Get the start node as a dynamic node *@
+		var startNode = Library.NodeById(startNodeID);
+		
+	}
+}

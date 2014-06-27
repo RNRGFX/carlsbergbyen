@@ -1,0 +1,39 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+	<script src="/scripts/jquery.reel-min.js" type="text/javascript"></script>  
+	<style>
+	#reel, #reel-reel {
+	width: 100%;
+	height: auto;
+	}
+	</style>
+
+
+@{
+  var gallery = new umbraco.MacroEngines.DynamicMedia(1077);
+  var items = new List<string>();
+
+  foreach (dynamic item in gallery.Children.Items)
+  {
+	 items.Add(item.Url);
+  }
+}
+
+ <img src="/demo/green.jpg" width="1400" height="778" id="reel">
+
+<script type="text/javascript">
+    var imageArray = @Html.Raw(Json.Encode(items));
+    
+     $('#reel').reel({
+		frame:   1,
+		loops:	true,
+		images: imageArray,
+		revolution: 800
+	});
+</script>
+
+
+
+ 

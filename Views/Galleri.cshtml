@@ -1,0 +1,49 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+		
+}
+
+@section head{
+	<link rel="stylesheet" href="/css/gallery.css?v1.1">
+	<link rel="stylesheet" href="/css/jquery.fancybox.css">
+
+	<script type="text/javascript" src="/scripts/jquery.debouncedresize.js"></script>
+	<script type="text/javascript" src="/scripts/isotope.pkgd.min.js"></script>
+	<script src="/scripts/jquery.fancybox.js"></script>
+	<script src="/scripts/gallery.js?v1.1"></script>
+
+}
+
+
+<div id="container" class="normal gallery single">
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+    
+    <article>
+		<div id="content" class="main">
+
+			<div class="main gu6">
+					<h1>@Model.Content.Name</h1>
+					<div class="description">@Umbraco.Field("description", convertLineBreaks: true)</div>
+					<div class="sortingOptions">
+						<div class="desc">Sorter efter:</div> 
+						<div class="sorter" rel="date" data-asc="true">Dato</div>
+						<div class="sorter" rel="name" data-asc="true">Filnavn</div>
+						<div class="sorter" rel="copyright" data-asc="true">Fotograf</div>
+					</div>
+						
+					<div class="row gu6" id="galleries">
+		    			@Umbraco.RenderMacro("Gallery")
+			
+					</div>
+				</div>
+			</div>						
+
+    </article>
+</div><!-- end #container -->

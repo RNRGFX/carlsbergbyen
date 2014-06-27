@@ -1,0 +1,45 @@
+﻿@using System.Globalization
+@inherits umbraco.MacroEngines.DynamicNodeContext
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = "Master.cshtml";
+}
+
+@section head{
+	<script type="text/javascript" src="/scripts/jquery.debouncedresize.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.isotope.min.js"></script>
+	<script type="text/javascript" src="/scripts/masonry.mod.js"></script>
+	<script type="text/javascript" src="/scripts/erhverv.js?v1.1"></script>
+
+}
+
+<div id="container" class="normal erhverv">
+	
+	
+	
+	<div class="clearfix top-padding"></div>
+	
+    
+    <article>
+		<div id="content" class="main">
+
+		        <div class="main gu6">
+					<h1>@Model.Content.Name</h1>
+					
+					<div class="sortingOptions">
+						<div class="desc">Sorter efter:</div> 
+						<div class="sorter" rel="status" data-asc="true">Status</div>
+						<div class="sorter" rel="area" data-asc="true">Størrelse</div>
+						<div class="sorter" rel="property" data-asc="true">Ejendom</div>
+					</div>
+						
+					<div class="row gu6" id="listings">	
+						
+					@Umbraco.RenderMacro("ListLejemaal")
+						
+					</div>
+				</div>
+			</div>						
+    </article>
+</div><!-- end #container -->
